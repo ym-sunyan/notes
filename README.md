@@ -1,5 +1,6 @@
 # notes
 基于github pages+actions/个人令牌+preact+antd 实现无服务器个人笔记静态网站
+基于preact框架实现的静态网站
 https: https://github.com/ym-sunyan/notes.git
 ssh: git@github.com:ym-sunyan/notes.git
 

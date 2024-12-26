@@ -1,0 +1,22 @@
+MUI中Material UI、Joy UI、Base UI、MUI System他们之间的区别
+
+MUI Core 是一个 React 样式库，可以帮助你快速构建美观的 UI。它包含了四个基础库：Material UI、Joy UI、Base UI 和 MUI System。以下是这四个库的主要特点和区别：
+Material UI：Material UI 是一个实现了 Google Material Design 的 React UI 组件库。它提供了一系列遵循 Material Design 规范的 UI 组件，如列表、按钮、图标等52。
+Joy UI：Joy UI 是一个使用 React 构建的 UI 组件库，旨在为开发过程带来乐趣。它也提供了一系列 UI 组件，但与 Material UI 不同，Joy UI 的设计更注重用户体验和交互性5。
+Base UI：Base UI 是一个 "headless"（无样式）的 React UI 组件和底层钩子的库。
+    与 Material UI 和 Joy UI 不同，Base UI 不提供任何预设的样式，而是提供了一些基础的 UI 组件，让开发者可以根据自己的需求自由定制样式5。
+MUI System：MUI System 是一组 CSS 实用程序的集合，用于使用 MUI 组件库快速布局自定义设计。
+    它提供了一组灵活的、通用的包装组件，如 Box 和 Container，这些组件可以通过 sx 属性快速定制样式。
+    此外，它还提供了直接访问主题的自定义设计令牌的功能，以确保一次性样式的一致性35。
+
+
+MUI中Material UI、Joy UI、Base UI、MUI System哪一个更适合开发手机端的app
+对于开发手机端的app，你可以根据你的需求和偏好来选择最适合的库。以下是每个库的特点：
+Material UI是一个全面的UI库，它实现了Google的Material Design设计语言。它提供了一系列的UI组件，如列表、轮播、图标、按钮等，可以帮助开发者快速创建美观的用户界面3。
+Joy UI是MUI的一个分支，专门用于创建更加现代化的用户界面。它提供了与Material UI相同的API和组件，但使用了更加现代的视觉元素和交互模式。
+    Joy UI的设计方向被称为Joy Design，它提供了一种简单而功能性的设计，并且允许你轻松地改变、扩展和重新设计其外观和行为1。
+Base UI是MUI的一个分支，它主要用于构建块状的用户界面，而不是流畅的用户界面。这意味着Base UI更适合用于构建简单的网站或应用程序。
+MUI System是一套CSS实用工具集，用于在MUI组件库中快速布局自定义设计。System为你提供了一组灵活的、通用的包装组件，如Box和Container，可以通过sx属性快速定制样式。
+    此属性允许你直接在组件内部定义样式，而不是创建大量的styled-components定义。此外，它还提供了直接访问主题自定义设计令牌的能力，以确保一次性样式的一致性4。
+
+总的来说，这四个库都是为了帮助开发者更有效地使用MUI库进行开发而设计的。选择哪一个取决于你的具体需求和喜好。

@@ -1,0 +1,62 @@
+1 使用create-next-react创建的项目 命令：
+    npx create-next-app@latest demo1
+    @latest 表示使用最新的版本
+    使用指定版本创建：npx create-next-app@14.0.1 demo1
+    demo1 名称
+    当前的版本信息
+    npm WARN EBADENGINE   package: 'create-next-app@14.0.1',
+    npm WARN EBADENGINE   required: { node: '>=18.17.0' },
+    npm WARN EBADENGINE   current: { node: 'v18.14.0', npm: '9.3.1' }
+    npm WARN EBADENGINE }
+
+    重要信息，必须全是 √ ：
+    √ Would you like to use TypeScript? ... No / Yes
+    √ Would you like to use ESLint? ... No / Yes
+    √ Would you like to use Tailwind CSS? ... No / Yes
+    √ Would you like to use `src/` directory? ... No / Yes
+    √ Would you like to use App Router? (recommended) ... No / Yes
+    √ Would you like to customize the default import alias (@/*)? ... No / Yes
+2 此时的目录结构如下：
+  * page在app文件夹中
+  * page.js 名称叫page.tsx
+  * app文件夹外新建pages
+  * pages文件夹内新建demo.js文件添加测试内容如下：
+      export default function Demo(){
+            return(
+                <div>这是一个demo</div>
+            )
+        }
+  需要重启项目，才能运行http://localhost:3000/demo
+  否则将提示404，至少我这里是如此
+
+3 <Link>跳转的写法
+    之前的版本的写法为： <Link href='/'><a>返回首页</a></Link>
+    现在版本需要去除a标签，写法为：<Link href='/'>返回首页</Link>
+    先版本添加a标签错误信息如下：
+    Server Error
+        Error: Invalid <Link> with <a> child. Please remove <a> or use <Link legacyBehavior>.
+        Learn more: https://nextjs.org/docs/messages/invalid-new-link-with-extra-anchor
+
+        This error happened while generating the page. Any console logs will be displayed in the terminal window.
+        Call Stack
+        LinkComponent
+
+4 router编程式跳转测试失败
+    import Router from 'next/navigation' 失败
+    import { useRouter } from 'next/router' 失败
+    尝试多种方法各种失败
+5 修改默认启动端口
+将package.json中以下内容：
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  修改为以下内容，即可修改端口（ -p 3100）：
+    "scripts": {
+        "dev": "next dev -p 3100",
+        "build": "next build",
+        "start": "next start -p 3100",
+        "lint": "next lint"
+    },

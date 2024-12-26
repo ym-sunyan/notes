@@ -1,0 +1,25 @@
+TypeError: Failed to execute 'fetch' on 'Window': Request with GET/HEAD method cannot have body.
+根据HTTP协议的规定，GET和HEAD请求不应该包含请求体。这是因为GET和HEAD请求的目的是从服务器获取资源，而不是发送数据给服务器。如果你尝试在GET或HEAD请求中包含请求体，浏览器或Node.js的fetch库会抛出错误。
+
+如果你需要在请求中包含数据，你应该使用POST、PUT或PATCH请求，而不是GET或HEAD请求。以下是一个使用POST请求并在请求体中包含JSON数据的例子：
+
+let url = 'https://example.com/api';
+let data = { key1: 'value1', key2: 'value2' };
+
+fetch(url, {
+  method: 'POST', // 或 'PUT'
+  headers: {
+      'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch((error) => {
+  console.error('Error:', error);
+});
+在这个例子中，我们首先定义了一个包含数据的对象data，然后使用JSON.stringify()函数将这个对象转换为JSON格式的字符串。
+然后，我们调用fetch()函数，传入两个参数：请求的URL和一个选项对象。在选项对象中，我们设置了method属性为'POST'，表示这是一个POST请求。我们还设置了headers属性，将Content-Type头部设置为'application/json'，表示我们将发送JSON格式的数据。最后，我们设置了body属性，将JSON格式的数据作为请求的主体发送。
+然后，我们使用.then()方法来处理Promise的解析。第一个.then()方法用于解析HTTP响应，得到一个Response对象。我们可以使用response.json()方法将Response对象解析为JSON格式的数据。
+最后，我们使用另一个.then()方法来处理解析后的数据。在这个例子中，我们只是将数据打印到控制台。
+如果在请求过程中发生错误，我们可以使用.catch()方法来捕获并处理这些错误

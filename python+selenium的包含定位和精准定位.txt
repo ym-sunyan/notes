@@ -1,0 +1,13 @@
+.//self::button[contains(@class, 'isHorizontalReader')]和.//self::button[@class='readerControls_item ']  区别
+这两个 XPath 表达式的主要区别在于它们定位元素的方式：
+
+1. **`.//self::button[contains(@class, 'isHorizontalReader')]`**:
+   - 这个表达式使用 `contains` 函数来查找包含特定类名的元素。
+   - 它会匹配所有包含 `isHorizontalReader` 类的 `button` 元素，即使该元素有多个类名。
+
+2. **`.//self::button[@class='readerControls_item']`**:
+   - 这个表达式使用精确匹配来查找具有特定类名的元素。
+   - 它只会匹配类名完全等于 `readerControls_item` 的 `button` 元素，不包括其他类名。
+
+举个例子，如果一个按钮的 `class` 属性是 `readerControls_item isHorizontalReader`，第一个表达式会匹配到这个按钮，而第二个表达式则不会。
+

@@ -1,0 +1,26 @@
+{
+	// Place your snippets for bat here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	"ReactStartBat": {
+		"prefix": "react start bat",
+		"body": [
+			"@echo off",
+			"set \"SCRIPT_PATH=%~dp0\"",
+			"set \"SCRIPT_NAME=%~nx0\"",
+			"start /b npm start",
+			"REM 等待npm start命令执行完成，可能需要一些时间或使用特定的命令来检测进程结束",
+			"timeout /t 30 /nobreak",
+
+			"REM 恢复原始标题",
+			"@echo off",
+			"@REM powershell -Command \"Write-Host '我的中文标题' -NoNewline; Read-Host\"",
+			"title tttttttest - %SCRIPT_NAME% - %SCRIPT_PATH:~0,-1% ",
+			"@REM pause '请按任意键退出...'",
+			"exit"
+		],
+		"description": "修改cmd标题"
+	}
+}

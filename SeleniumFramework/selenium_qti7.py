@@ -406,22 +406,39 @@ class SeleniumBaseClass(object):
     def GetAllHandles(self):
         self.handles = self.browser.window_handles
 
-    def Send(self, xpath, attribute_name=By.XPATH, handle=None, waiting_time=10, send_info=""):
+    def Send(self, xpath, attribute_name=By.XPATH, handle=None, waiting_time=10, send_info:str=""):
         '''
         @Time    :   2020/12/09 15:16:44
         @功能    :   编辑框写入内容
         handle!=None，表示写入基于该handle的下层输入框,否则是基于顶层的句柄
+        ****注意****
+        最后一个换行后面的如果全是空格将被合并给一个，除非在其他后面再加一个换行
+        比如
+        send_info="a\nb\n    ",最后输入的内容只有 a b，
+        如果希望保留最后一个\n后面的空格需要写成send_info="a\nb\n    \n"
+        这种情况应对的是搜索框，最后一个换行激活搜索功能
         '''
+        if send_info.strip() == "":
+            print("输入的内容为空")
+            return
+        
+        send_info_list = send_info.split("\n")
+        if send_info_list[-1].strip() == "":
+            send_info_list[-1] = "\n"
         while waiting_time > 0:
             try:
                 new_handle = self.GetHandle(attribute_name=attribute_name, xpath=xpath, handle=handle)
-                new_handle.send_keys(send_info)
+                if len(send_info_list) == 1:
+                    new_handle.send_keys(send_info)
+                else:
+                    for info in send_info_list:
+                        new_handle.send_keys(info)
+                        if info != "\n": # \n 已经是最后一个输入
+                            new_handle.send_keys(Keys.SHIFT, Keys.ENTER)
                 return True
             except:
                 waiting_time -= 1
-                if waiting_time == 0:
-                    traceback.print_exc()
-                    _,_,info = current_stack()
+                traceback.print_exc()
                 sleep(1)
         return False
 

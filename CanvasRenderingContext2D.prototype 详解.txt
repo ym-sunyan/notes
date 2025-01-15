@@ -1,0 +1,134 @@
+CanvasRenderingContext2D 是 HTML5 Canvas API 的核心部分，它提供了一组方法和属性，用于在 2D 绘图上下文中绘制图形、文本、图像等。以下是对 CanvasRenderingContext2D 的详细解释，包括其主要方法和属性：
+1. 创建 CanvasRenderingContext2D 实例
+要使用 CanvasRenderingContext2D，首先需要获取一个 Canvas 元素的上下文：
+JavaScript复制
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+2. 主要方法和属性
+2.1 绘制路径
+beginPath()：开始一个新的路径。
+closePath()：关闭当前路径，自动绘制一条直线回到路径的起始点。
+moveTo(x, y)：将路径的当前位置移动到指定的点。
+lineTo(x, y)：从当前位置绘制一条直线到指定的点。
+quadraticCurveTo(cpx, cpy, x, y)：绘制一个二次贝塞尔曲线。
+bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)：绘制一个三次贝塞尔曲线。
+arc(x, y, radius, startAngle, endAngle, counterclockwise)：绘制一个圆弧。
+rect(x, y, width, height)：绘制一个矩形。
+2.2 填充和描边
+fill()：填充当前路径。
+stroke()：描边当前路径。
+fillRect(x, y, width, height)：绘制并填充一个矩形。
+strokeRect(x, y, width, height)：绘制并描边一个矩形。
+fillText(text, x, y, maxWidth)：在指定位置绘制填充文本。
+strokeText(text, x, y, maxWidth)：在指定位置绘制描边文本。
+2.3 路径状态
+save()：保存当前的绘图状态。
+restore()：恢复之前保存的绘图状态。
+2.4 变换
+translate(x, y)：将画布原点移动到指定的位置。
+rotate(angle)：旋转画布。
+scale(x, y)：缩放画布。
+transform(m11, m12, m21, m22, dx, dy)：应用一个变换矩阵。
+setTransform(m11, m12, m21, m22, dx, dy)：重置变换矩阵并应用一个新的变换矩阵。
+2.5 剪切路径
+clip()：将当前路径设置为剪切路径，后续的绘制操作只会在这个路径内进行。
+2.6 图像和模式
+drawImage(image, dx, dy)：在指定位置绘制图像。
+drawImage(image, dx, dy, dWidth, dHeight)：在指定位置绘制图像，并指定图像的宽度和高度。
+drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)：从图像中提取一个矩形区域，并在指定位置绘制。
+createPattern(image, repetition)：创建一个图案，repetition 可以是 repeat、repeat-x、repeat-y 或 no-repeat。
+2.7 渐变和模式
+createLinearGradient(x0, y0, x1, y1)：创建一个线性渐变。
+createRadialGradient(x0, y0, r0, x1, y1, r1)：创建一个径向渐变。
+2.8 文本
+font：设置或返回当前的文本字体。
+textAlign：设置或返回当前的文本对齐方式，可以是 start、end、left、right 或 center。
+textBaseline：设置或返回当前的文本基线，可以是 top、hanging、middle、alphabetic、ideographic 或 bottom。
+direction：设置或返回当前的文本方向，可以是 ltr、rtl 或 inherit。
+measureText(text)：返回一个包含文本宽度的对象。
+2.9 样式
+fillStyle：设置或返回填充颜色、渐变或模式。
+strokeStyle：设置或返回描边颜色、渐变或模式。
+lineWidth：设置或返回当前的线宽。
+lineCap：设置或返回线条的端点样式，可以是 butt、round 或 square。
+lineJoin：设置或返回线条的连接点样式，可以是 bevel、round 或 miter。
+miterLimit：设置或返回最大斜接长度。
+getLineDash()：返回当前的虚线样式。
+setLineDash(segments)：设置虚线样式。
+lineDashOffset：设置或返回虚线的偏移量。
+2.10 全局属性
+globalAlpha：设置或返回全局透明度。
+globalCompositeOperation：设置或返回合成操作，可以是 source-over、source-in、source-out、source-atop、destination-over、destination-in、destination-out、destination-atop、lighter、copy 或 xor。
+2.11 图像数据
+createImageData(sw, sh)：创建一个新的图像数据对象。
+getImageData(sx, sy, sw, sh)：从画布中提取图像数据。
+putImageData(imagedata, dx, dy)：将图像数据绘制到画布上。
+putImageData(imagedata, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight)：将图像数据的一部分绘制到画布上。
+3. 示例
+以下是一个简单的示例，展示了如何使用 CanvasRenderingContext2D 绘制一些基本图形和文本：
+HTML复制
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas 2D Context Example</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 绘制一个矩形
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(10, 10, 150, 75);
+
+        // 绘制一个圆形
+        ctx.beginPath();
+        ctx.arc(200, 50, 30, 0, Math.PI * 2);
+        ctx.fillStyle = 'red';
+        ctx.fill();
+
+        // 绘制一条直线
+        ctx.beginPath();
+        ctx.moveTo(10, 100);
+        ctx.lineTo(150, 100);
+        ctx.strokeStyle = 'green';
+        ctx.stroke();
+
+        // 绘制文本
+        ctx.font = '30px Arial';
+        ctx.fillStyle = 'black';
+        ctx.fillText('Hello, World!', 10, 200);
+
+        // 绘制图像
+        const img = new Image();
+        img.onload = function() {
+            ctx.drawImage(img, 10, 250, 150, 75);
+        };
+        img.src = 'path/to/your/image.jpg'; // 替换为你的图片路径
+    </script>
+</body>
+</html>
+4. 重写 fillText 和 strokeText 方法
+如果你需要重写 fillText 和 strokeText 方法来捕获文本信息，可以参考以下代码：
+JavaScript复制
+let capturedText = [];
+const originalFillText = CanvasRenderingContext2D.prototype.fillText;
+const originalStrokeText = CanvasRenderingContext2D.prototype.strokeText;
+
+CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+    capturedText.push({
+        text: text,
+        x: x,
+        y: y,
+        maxWidth: maxWidth,
+        type: 'fill',
+        style: {
+            font: this.font,
+            fillStyle: this.fillStyle,
+            textAlign: this.textAlign,
+            textBaseline: this.textBaseline,
+            fontSize: this.font.split('px')[0], // 字体大小
+            lineHeight: this.font.split('px')[0] *

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas 文本和多个圆角矩形框示例</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+    <script>
+        // 存储捕获的文本内容和矩形框信息
+        let capturedText = [];
+        let capturedRects = [];
+
+        // 保存原始的 fillText, strokeText 和 rect 方法
+        const originalFillText = CanvasRenderingContext2D.prototype.fillText;
+        const originalStrokeText = CanvasRenderingContext2D.prototype.strokeText;
+        const originalRect = CanvasRenderingContext2D.prototype.rect;
+        const originalBeginPath = CanvasRenderingContext2D.prototype.beginPath;
+        const originalClosePath = CanvasRenderingContext2D.prototype.closePath;
+        const originalStroke = CanvasRenderingContext2D.prototype.stroke;
+        const originalFill = CanvasRenderingContext2D.prototype.fill;
+
+        // 重写 fillText 方法
+        CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+            capturedText.push({
+                text: text,
+                x: x,
+                y: y,
+                maxWidth: maxWidth,
+                type: 'fill',
+                style: {
+                    font: this.font,
+                    fillStyle: this.fillStyle,
+                    textAlign: this.textAlign,
+                    textBaseline: this.textBaseline,
+                    fontSize: this.font.split('px')[0], // 字体大小
+                    lineHeight: this.font.split('px')[0] * 1.2, // 行高
+                    textWidth: this.measureText(text).width, // 文本宽度
+                    textLines: text.split('\\n').length // 文本行数
+                }
+            });
+            return originalFillText.apply(this, arguments);
+        };
+
+        // 重写 strokeText 方法
+        CanvasRenderingContext2D.prototype.strokeText = function(text, x, y, maxWidth) {
+            capturedText.push({
+                text: text,
+                x: x,
+                y: y,
+                maxWidth: maxWidth,
+                type: 'stroke',
+                style: {
+                    font: this.font,
+                    strokeStyle: this.strokeStyle,
+                    textAlign: this.textAlign,
+                    textBaseline: this.textBaseline
+                }
+            });
+            return originalStrokeText.apply(this, arguments);
+        };
+
+        // 重写 rect 方法
+        CanvasRenderingContext2D.prototype.rect = function(x, y, width, height) {
+            capturedRects.push({
+                x: x,
+                y: y,
+                width: width,
+                height: height,
+                type: 'rect',
+                isRounded: false, // 默认为非圆角矩形
+                style: {
+                    strokeStyle: this.strokeStyle,
+                    fillStyle: this.fillStyle,
+                    lineWidth: this.lineWidth
+                }
+            });
+            return originalRect.apply(this, arguments);
+        };
+
+        // 重写 beginPath 方法
+        CanvasRenderingContext2D.prototype.beginPath = function() {
+            this.currentPath = [];
+            return originalBeginPath.apply(this, arguments);
+        };
+
+        // 重写 closePath 方法
+        CanvasRenderingContext2D.prototype.closePath = function() {
+            this.currentPath.push({ type: 'close' });
+            return originalClosePath.apply(this, arguments);
+        };
+
+        // 重写 stroke 方法
+        CanvasRenderingContext2D.prototype.stroke = function() {
+            if (this.currentPath) {
+                capturedRects.push({
+                    path: this.currentPath,
+                    type: 'path',
+                    style: {
+                        strokeStyle: this.strokeStyle,
+                        lineWidth: this.lineWidth
+                    }
+                });
+            }
+            return originalStroke.apply(this, arguments);
+        };
+
+        // 重写 fill 方法
+        CanvasRenderingContext2D.prototype.fill = function() {
+            if (this.currentPath) {
+                capturedRects.push({
+                    path: this.currentPath,
+                    type: 'path',
+                    style: {
+                        fillStyle: this.fillStyle
+                    }
+                });
+            }
+            return originalFill.apply(this, arguments);
+        };
+
+        // 获取捕获的文本内容和矩形框信息
+        window.getCapturedTextAndRects = function() {
+            const sortedText = capturedText.sort((a, b) => {
+                if (Math.abs(a.y - b.y) > 10) {
+                    return a.y - b.y;
+                }
+                return a.x - b.x;
+            });
+
+            let result = '';
+            let contents_arr = [];
+            let lastY = null;
+            let last_style = null;
+            sortedText.forEach(item => {
+                if (lastY !== null && Math.abs(item.y - lastY) > 40) {
+                    result += '\\n'; // 插入换行符
+                    contents_arr.push({
+                        "Y": lastY,
+                        "content": result,
+                        "item": last_style
+                    });
+                    result = "";
+                }
+                result += item.text + '';
+                lastY = item.y;
+                last_style = item;
+            });
+            if (result !== "" && last_style !== null) {
+                contents_arr.push({
+                    "Y": lastY,
+                    "content": result,
+                    "item": last_style
+                });
+            }
+
+            return {
+                text: contents_arr,
+                rects: capturedRects
+            };
+        };
+
+        // 清除已捕获的文本内容和矩形框信息
+        window.clearCapturedTextAndRects = function() {
+            capturedText = [];
+            capturedRects = [];
+        };
+
+        // 恢复原始方法
+        window.restoreOriginalMethods = function() {
+            CanvasRenderingContext2D.prototype.fillText = originalFillText;
+            CanvasRenderingContext2D.prototype.strokeText = originalStrokeText;
+            CanvasRenderingContext2D.prototype.rect = originalRect;
+            CanvasRenderingContext2D.prototype.beginPath = originalBeginPath;
+            CanvasRenderingContext2D.prototype.closePath = originalClosePath;
+            CanvasRenderingContext2D.prototype.stroke = originalStroke;
+            CanvasRenderingContext2D.prototype.fill = originalFill;
+        };
+
+        // 绘制文本和圆角矩形框
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 绘制圆角矩形框
+        function roundedRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+
+            ctx.stroke();
+        }
+
+        // 设置样式
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'black';
+        ctx.strokeStyle = 'blue';
+        ctx.lineWidth = 2;
+
+        // 绘制第一个圆角矩形框
+        roundedRect(ctx, 50, 50, 300, 100, 10);
+
+        // 绘制第二个圆角矩形框
+        ctx.strokeStyle = 'red';
+        roundedRect(ctx, 50, 200, 300, 100, 10);
+
+        // 绘制一个普通的矩形框
+        ctx.strokeStyle = 'green';
+        ctx.rect(50, 350, 300, 100);
+        ctx.stroke();
+
+        // 绘制文本
+        ctx.fillText('这是一段被圆角矩形框包裹的文字', 60, 100);
+        ctx.fillText('这是另一段被圆角矩形框包裹的文字', 60, 250);
+        ctx.fillText('这是一个普通矩形框包裹的文字', 60, 400);
+
+        // 获取捕获的文本内容和矩形框信息
+        const capturedData = getCapturedTextAndRects();
+        console.log(capturedData);
+    </script>
+</body>
+</html>

@@ -386,6 +386,22 @@ class SeleniumBaseClass(object):
         scroll_position = 500
         self.browser.execute_script(f"window.scrollTo(0, {scroll_position});")
 
+    def ScrollBar_相对位置(self, scroll_position):
+        '''
+        @Time    :   2025/01/09 15:17:26
+        @功能    :   在当前位置的基础之上，相对移动scroll_position
+        '''
+        self.browser.execute_script(f"window.scrollBy(0,{scroll_position});")
+        pass
+
+    def ScrollBar_指定位置(self, handle):
+        '''
+        @Time    :   2025/01/09 15:20:12
+        @功能    :   移动到handle位置
+        '''
+        self.browser.execute_script("arguments[0].scrollIntoView();", handle)
+        pass
+
     def WaitLoadingInfo(self, xpath, attribute_name=By.XPATH, handle=None, waiting_time=30):
         '''
         @Time    :   2022/08/10 14:39:26

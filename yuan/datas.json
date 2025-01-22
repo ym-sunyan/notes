@@ -1,0 +1,599 @@
+{
+  "datas": [
+    {
+      "id": "0",
+      "llm_model": "Qwen2.5-0.5B",
+      "customer":"Ali",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=2",
+      "soc": "SM8750",
+      "token_rates": "160.26 t/s"
+    },
+    {
+      "id": "1",
+      "llm_model": "Qwen2.5-1.5B",
+      "customer":"Ali",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": " ",
+      "soc": " ",
+      "token_rates": "NA"
+    },
+    {
+      "id": "2",
+      "llm_model": "Qwen2.5-3B",
+      "customer":"Ali",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=2",
+      "soc": "SM8750",
+      "token_rates": "34.50 t/s"
+    },
+    {
+      "id": "3",
+      "llm_model": "Qwen2.5-7B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "1, 128}",
+      "feature": "",
+      "soc": "",
+      "token_rates": ""
+    },
+    {
+      "id": "4",
+      "llm_model": "Qwen2-1.5B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "fp16 mixed precision",
+      "soc": "SM8750",
+      "token_rates": "NA"
+    },
+    {
+      "id": "5",
+      "llm_model": "Qwen2-7B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=4",
+      "soc": "SM8750",
+      "token_rates": "15.24 t/s"
+    },
+    {
+      "id": "6",
+      "llm_model": "Qwen1.5-1.8B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "45.62 t/s"
+    },
+    {
+      "id": "7",
+      "llm_model": "Qwen1.5-4B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "22.54 t/s"
+    },
+    {
+      "id": "8",
+      "llm_model": "Hunyuan-3B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=4",
+      "soc": "SM8750",
+      "token_rates": "26.69 t/s"
+    },
+    {
+      "id": "9",
+      "llm_model": "MiniCPM-1B",
+      "customer":"Modelbest",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=8",
+      "soc": "SM8750",
+      "token_rates": "60 t/s"
+    },
+    {
+      "id": "10",
+      "llm_model": "MiniCPM-2B",
+      "customer":"Modelbest",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": " ",
+      "soc": "SM8750",
+      "token_rates": "26 t/s"
+    },
+    {
+      "id": "11",
+      "llm_model": "ChatGLM3-6B",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "",
+      "soc": "",
+      "token_rates": ""
+    },
+    {
+      "id": "12",
+      "llm_model": "Baichuan-4B LoraV2",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{32}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "28.2 t/s"
+    },
+    {
+      "id": "13",
+      "llm_model": "Baichuan-4B LoraV2",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{64}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "23.6 t/s"
+    },
+    {
+      "id": "14",
+      "llm_model": "SSD",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{32}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "28.2 t/s"
+    },
+    {
+      "id": "15",
+      "llm_model": "SSD",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{64}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "23.6 t/s"
+    },
+    {
+      "id": "16",
+      "llm_model": "Baichuan-4B LoraV2",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{32}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "17.4 t/s"
+    },
+    {
+      "id": "17",
+      "llm_model": "Baichuan-4B LoraV2",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{64}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "15.6 t/s"
+    },
+    {
+      "id": "18",
+      "llm_model": "non-SSD",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{32}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "17.4 t/s"
+    },
+    {
+      "id": "19",
+      "llm_model": "non-SSD",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{64}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "15.6 t/s"
+    }
+  ],
+  "datas_bk": [
+    {
+      "id": "0",
+      "llm_model": "Qwen2.5-0.5B",
+      "customer":"Ali",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=2",
+      "soc": "SM8750",
+      "token_rates": "160.26 t/s"
+    },
+    {
+      "id": "1",
+      "llm_model": "Qwen2.5-1.5B",
+      "customer":"Ali",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": " ",
+      "soc": " ",
+      "token_rates": "NA"
+    },
+    {
+      "id": "2",
+      "llm_model": "Qwen2.5-3B",
+      "customer":"Ali",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=2",
+      "soc": "SM8750",
+      "token_rates": "34.50 t/s"
+    },
+    {
+      "id": "3",
+      "llm_model": "Qwen2.5-7B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "1, 128}",
+      "feature": "",
+      "soc": "",
+      "token_rates": ""
+    },
+    {
+      "id": "4",
+      "llm_model": "Qwen2-1.5B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "fp16 mixed precision",
+      "soc": "SM8750",
+      "token_rates": "NA"
+    },
+    {
+      "id": "5",
+      "llm_model": "Qwen2-7B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=4",
+      "soc": "SM8750",
+      "token_rates": "15.24 t/s"
+    },
+    {
+      "id": "6",
+      "llm_model": "Qwen1.5-1.8B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "45.62 t/s"
+    },
+    {
+      "id": "7",
+      "llm_model": "Qwen1.5-4B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "22.54 t/s"
+    },
+    {
+      "id": "8",
+      "llm_model": "Hunyuan-3B",
+      "customer":"Ali",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=4",
+      "soc": "SM8750",
+      "token_rates": "26.69 t/s"
+    },
+    {
+      "id": "9",
+      "llm_model": "MiniCPM-1B",
+      "customer":"Modelbest",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": "GQA, num_key_value_heads=8",
+      "soc": "SM8750",
+      "token_rates": "60 t/s"
+    },
+    {
+      "id": "10",
+      "llm_model": "MiniCPM-2B",
+      "customer":"Modelbest",
+      "cl": "1024",
+      "arn": "{1, 128}",
+      "feature": " ",
+      "soc": "SM8750",
+      "token_rates": "26 t/s"
+    },
+    {
+      "id": "11",
+      "llm_model": "ChatGLM3-6B",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{1, 128}",
+      "feature": "",
+      "soc": "",
+      "token_rates": ""
+    },
+    {
+      "id": "12",
+      "llm_model": "Baichuan-4B LoraV2",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{32}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "28.2 t/s"
+    },
+    {
+      "id": "13",
+      "llm_model": "Baichuan-4B LoraV2",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{64}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "23.6 t/s"
+    },
+    {
+      "id": "14",
+      "llm_model": "SSD",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{32}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "28.2 t/s"
+    },
+    {
+      "id": "15",
+      "llm_model": "SSD",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{64}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "23.6 t/s"
+    },
+    {
+      "id": "16",
+      "llm_model": "Baichuan-4B LoraV2",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{32}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "17.4 t/s"
+    },
+    {
+      "id": "17",
+      "llm_model": "Baichuan-4B LoraV2",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{64}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "15.6 t/s"
+    },
+    {
+      "id": "18",
+      "llm_model": "non-SSD",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{32}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "17.4 t/s"
+    },
+    {
+      "id": "19",
+      "llm_model": "non-SSD",
+      "customer":"Zhipu",
+      "cl": "2048",
+      "arn": "{64}",
+      "feature": "non-GQA",
+      "soc": "SM8750",
+      "token_rates": "15.6 t/s"
+    }
+  ],
+  "table_titles_keys": {
+    "table_titles": [
+      "LLM Model",
+      "Customer",
+      "CL",
+      "ARN",
+      "Feature",
+      "SoC",
+      "Token Rates"
+    ],
+    "table_keys": [
+      "llm_model",
+      "customer",
+      "cl",
+      "arn",
+      "feature",
+      "soc",
+      "token_rates"
+    ],
+    "descs": "table_titles 存储的是web前端的field；table_keys存储的是数据库字段的名称"
+  },
+  "datas_list": [
+    [
+      "LLM Model",
+      "Customer",
+      "CL",
+      "ARN",
+      "Feature",
+      "SoC",
+      "Token Rates"
+    ],
+    [
+      "Qwen2.5-0.5B",
+      "1024",
+      "{1, 128}",
+      "GQA, num_key_value_heads=2",
+      "SM8750",
+      "160.26 t/s"
+    ],
+    [
+      "Qwen2.5-1.5B",
+      "1024",
+      "{1, 128}",
+      " ",
+      " ",
+      "NA"
+    ],
+    [
+      "Qwen2.5-3B",
+      "1024",
+      "{1, 128}",
+      "GQA, num_key_value_heads=2",
+      "SM8750",
+      "34.50 t/s"
+    ],
+    [
+      "Qwen2.5-7B",
+      "2048",
+      "1, 128}",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Qwen2-1.5B",
+      "2048",
+      "{1, 128}",
+      "fp16 mixed precision",
+      "SM8750",
+      "NA"
+    ],
+    [
+      "Qwen2-7B",
+      "2048",
+      "{1, 128}",
+      "GQA, num_key_value_heads=4",
+      "SM8750",
+      "15.24 t/s"
+    ],
+    [
+      "Qwen1.5-1.8B",
+      "2048",
+      "{1, 128}",
+      "non-GQA",
+      "SM8750",
+      "45.62 t/s"
+    ],
+    [
+      "Qwen1.5-4B",
+      "2048",
+      "{1, 128}",
+      "non-GQA",
+      "SM8750",
+      "22.54 t/s"
+    ],
+    [
+      "Hunyuan-3B",
+      "2048",
+      "{1, 128}",
+      "GQA, num_key_value_heads=4",
+      "SM8750",
+      "26.69 t/s"
+    ],
+    [
+      "MiniCPM-1B",
+      "1024",
+      "{1, 128}",
+      "GQA, num_key_value_heads=8",
+      "SM8750",
+      "60 t/s"
+    ],
+    [
+      "MiniCPM-2B",
+      "1024",
+      "{1, 128}",
+      " ",
+      "SM8750",
+      "26 t/s"
+    ],
+    [
+      "ChatGLM3-6B",
+      "2048",
+      "{1, 128}",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Baichuan-4B LoraV2",
+      "2048",
+      "{32}",
+      "non-GQA",
+      "SM8750",
+      "28.2 t/s"
+    ],
+    [
+      "Baichuan-4B LoraV2",
+      "2048",
+      "{64}",
+      "non-GQA",
+      "SM8750",
+      "23.6 t/s"
+    ],
+    [
+      "SSD",
+      "2048",
+      "{32}",
+      "non-GQA",
+      "SM8750",
+      "28.2 t/s"
+    ],
+    [
+      "SSD",
+      "2048",
+      "{64}",
+      "non-GQA",
+      "SM8750",
+      "23.6 t/s"
+    ],
+    [
+      "Baichuan-4B LoraV2",
+      "2048",
+      "{32}",
+      "non-GQA",
+      "SM8750",
+      "17.4 t/s"
+    ],
+    [
+      "Baichuan-4B LoraV2",
+      "2048",
+      "{64}",
+      "non-GQA",
+      "SM8750",
+      "15.6 t/s"
+    ],
+    [
+      "non-SSD",
+      "2048",
+      "{32}",
+      "non-GQA",
+      "SM8750",
+      "17.4 t/s"
+    ],
+    [
+      "non-SSD",
+      "2048",
+      "{64}",
+      "non-GQA",
+      "SM8750",
+      "15.6 t/s"
+    ]
+  ],
+  "json-server": "json-server -p 7878 -h 10.233.202.137 --watch datas.json"
+}

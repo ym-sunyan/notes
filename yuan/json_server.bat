@@ -1,0 +1,1 @@
+json-server --watch 制造模拟数据.json --port 7766

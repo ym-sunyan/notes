@@ -1,0 +1,1 @@
+uvicorn fastapi_test:app --host 10.233.202.137 --port 7767

@@ -1,0 +1,12 @@
+错误信息:'fdsfsdf' is an invalid keyword argument for UpdateRecordTabel
+{'fdsfsdf': 'dfsdfs', 'time': datetime.datetime(2024, 11, 25, 12, 6, 4, 408753)}
+错误信息:'fdsfsdf' is an invalid keyword argument for UpdateRecordTabel
+{'fdsfsdf': 'dfsdfs', 'time': datetime.datetime(2024, 11, 25, 12, 6, 8, 688854)}
+错误信息:'relations' is an invalid keyword argument for UpdateRecordTabel
+{'id': 1, 'only_key': 'Y S_2000-01-10_2024-11-25', 'relations': '父亲', 'maritalStatus': '已婚', 'health_status': '健康', 'work_type': '打工', 'work_city': '上海', 'month_income': 5000, 'year_income': 6}
+错误信息:'relations' is an invalid keyword argument for UpdateRecordTabel
+{'id': 2, 'only_key': 'Y S_2000-01-10_2024-11-25', 'relations': '母亲', 'maritalStatus': '已婚', 'health_status': '健康', 'work_type': '打工', 'work_city': '上海', 'month_income': 4000, 'year_income': 5}
+错误信息:'relations' is an invalid keyword argument for UpdateRecordTabel
+{'id': 1, 'only_key': 'Y S_2000-01-10_2024-11-25', 'relations': '父亲', 'maritalStatus': '已婚', 'health_status': '健康', 'work_type': '退休', 'work_city': '上海', 'month_income': 5000, 'year_income': 6}
+错误信息:'relations' is an invalid keyword argument for UpdateRecordTabel
+{'id': None, 'only_key': 'Y S_2000-01-10_2024-11-25', 'relations': '父亲', 'maritalStatus': '已婚', 'health_status': '健康', 'work_type': '打工', 'work_city': '上海', 'month_income': 5000, 'year_income': 6}

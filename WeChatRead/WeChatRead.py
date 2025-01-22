@@ -88,6 +88,37 @@ def GetwereadQQBookAllUrlV2(qti,  begin_url, save_file, begin_index=0, max_url_l
             break
     return 
 
+def GetwereadQQBookAllUrlV3(qti,  begin_url, save_file, begin_index=0, max_url_length=None):
+    '''
+    @Time    :   2025/01/07 13:09:12
+    @功能    :   获得微信读书中，某本书的所有的url
+    这里需要区分：下一页和下一章的区别，从现有的目录结构来看下一章需要切换url，但是下一页不需要切换url
+    '''
+    qti.browser.get(begin_url)
+    if begin_index == 0:
+        with codecs.open(save_file, "a+", "utf-8") as fw:
+            fw.write(f"{begin_index};{begin_url}\n")
+        begin_index = 1
+    index, url_list =begin_index, []
+    while 1:
+        next_handle = qti.GetHandle(xpath=".//self::button[@class='readerFooter_button']")
+        if next_handle is None: break
+        update_url = True
+        if next_handle.text.strip() == "下一页":
+            update_url = False
+        next_handle.click()
+        sleep(1)
+        url_list.append(qti.browser.current_url)
+        with codecs.open(save_file, "a+", "utf-8") as fw:
+            if not update_url:
+                fw.write(f"{index};同一章节，下一页\n")
+            else:
+                fw.write(f"{index};{qti.browser.current_url}\n")
+        index += 1
+        if max_url_length is not None and len(url_list) == max_url_length:
+            break
+    return 
+
 def MainDemo():
     '''
     @Time    :   2022/10/31 09:50:22
@@ -334,17 +365,18 @@ window.restoreOriginalMethods = function() {
 def 微信读书Main(begin_url, book_name=None):
     '''
     @Time    :   2022/10/31 09:50:22
-    @功能    :    
+    @功能    :    该函数只能获取所有已经绘制在canvas中的文本内容，
+    以及穿插在文本中的上传的图片
     '''
     qti = selenium_qti(browser=None,
                        url='https://weread.qq.com/',
                        chromedriver_path=BIC['chromedriver_path'],
                        google_data_path=BIC['google_data_path'],
                        del_userdata=False,
-                       virtual_chrome=True, # 使用虚拟浏览器
+                    #    virtual_chrome=True, # 使用虚拟浏览器
                        debug=False)
-    # qti.OpenChrome()
-    qti.OpenBaseChrome(virtual_browser=True)
+    qti.OpenChrome()
+    # qti.OpenBaseChrome(virtual_browser=True)
     # 最大化浏览器窗口
     qti.browser.maximize_window()
 
@@ -375,20 +407,20 @@ def 微信读书Main(begin_url, book_name=None):
     # sleep(1)
     # 获取目录数量. 包含匹配的方式获取
     begin_index = 0
-    if url_lines == []:
-        GetwereadQQBookAllUrlV2(qti, begin_url, save_file, begin_index=begin_index)
-    else:
-        contents_handles = qti.GetHandles(".//self::li[contains(@class, 'readerCatalog_list_item')]")
-        # for index, content in enumerate(contents_handles):
-        #     # 如果没有登录账号，那么只能获取免费的目录
-        #     print(f"{index}; {content.text}") #content.text 需要先展开书的目录
-        if contents_handles is not None:
-            # 获取书所有的章节url
-            last_url = url_lines[-1].split(";")[-1].strip()
-            begin_index = len(url_lines)
+    # if url_lines == []:
+    #     GetwereadQQBookAllUrlV2(qti, begin_url, save_file, begin_index=begin_index)
+    # else:
+    #     contents_handles = qti.GetHandles(".//self::li[contains(@class, 'readerCatalog_list_item')]")
+    #     # for index, content in enumerate(contents_handles):
+    #     #     # 如果没有登录账号，那么只能获取免费的目录
+    #     #     print(f"{index}; {content.text}") #content.text 需要先展开书的目录
+    #     if contents_handles is not None:
+    #         # 获取书所有的章节url
+    #         last_url = url_lines[-1].split(";")[-1].strip()
+    #         begin_index = len(url_lines)
 
-        if begin_index != len(contents_handles):
-            GetwereadQQBookAllUrlV2(qti, last_url, save_file, begin_index=begin_index)
+    #     if begin_index != len(contents_handles):
+    #         GetwereadQQBookAllUrlV2(qti, last_url, save_file, begin_index=begin_index)
 
     script = '''
 // 存储捕获的文本内容
@@ -683,6 +715,410 @@ window.getAllImgs = function(){
             # if index == 0:  url = begin_url
             if index == 0:  url = url_lines[index+1].split(";")[-1].strip()
             else:           url =  url_lines[index].split(";")[-1].strip()
+            qti.browser.get(url)
+            sleep(5)
+            # 注入js
+            qti.browser.execute_script(script)
+            if index == 0:
+                # 首页需要使用点击上一章才能获取完整
+                next_handle = qti.GetHandle(xpath=".//self::button[@class='readerHeaderButton']")
+            else:
+                # 进入下一章，否则此时 qti.browser.execute_script("return getCapturedText();") 无内容
+                next_handle = qti.GetHandle(xpath=".//self::button[@class='readerFooter_button']")
+            if next_handle is None:
+                break
+            next_handle.click()
+            sleep(5)
+            # 获取内容
+            qti.browser.execute_script(img_script) #注入获取图片的脚本
+            canvas_info = qti.browser.execute_script("return getCapturedText();")
+            dynamic_web_content = 循环获得已经渲染到网页的动态内容(qti)
+            img_dict_list = qti.browser.execute_script("return getAllImgs();")
+            new_canvas_info = {data_dict["Y"]:data_dict["content"] for data_dict in canvas_info}
+            new_img_dict = {int(img_dict['Y坐标']):img_dict for img_dict in img_dict_list}
+            combined_sorted_keys = sorted(list(new_canvas_info.keys()) + list(new_img_dict.keys()))
+            new_content = []
+            for key in combined_sorted_keys:
+                if key in list(new_canvas_info.keys()):
+                    new_content.append(new_canvas_info[key])
+                else:
+                    new_content.append(f"{str(new_img_dict[key])}\n")
+                    pass
+            canvas_info = "".join(new_content)
+            if dynamic_web_content.strip() != "":
+                canvas_info = f"{canvas_info}\n{dynamic_web_content}"
+            print(canvas_info)
+            book_content.append(canvas_info)
+            with codecs.open(save_book, "a+", "utf-8") as fa:
+                fa.write(f"{canvas_info}\n{index+1}\t\n")
+            # 清除捕获的文本内容
+            qti.browser.execute_script("clearCapturedText();")
+
+            # 恢复原始方法
+            qti.browser.execute_script("restoreOriginalMethods();")
+            # print(1/0)
+    except Exception as e:
+        print(e)
+        pass
+    qti.Close()
+
+def 微信读书MainV2(begin_url, book_name=None):
+    '''
+    @Time    :   2022/10/31 09:50:22
+    @功能    :    该函数只能获取所有已经绘制在canvas中的文本内容，
+    以及穿插在文本中的上传的图片
+    除了上面的功能还具有：
+    获得已经渲染在网页上切实乱序的网站的内容
+    '''
+    qti = selenium_qti(browser=None,
+                       url='https://weread.qq.com/',
+                       chromedriver_path=BIC['chromedriver_path'],
+                       google_data_path=BIC['google_data_path'],
+                       del_userdata=False,
+                       virtual_chrome=True, # 使用虚拟浏览器
+                       debug=False)
+    # qti.OpenChrome()
+    qti.OpenBaseChrome(virtual_browser=True)
+    # 最大化浏览器窗口
+    qti.browser.maximize_window()
+
+    if book_name is None:
+        time_str = time.strftime('%Y_%m_%d',time.localtime(time.time()))
+        book_name = f"微信阅读_{time_str}"
+
+    save_file = rf"{BIC['base_path']}\url_list_{book_name}.txt"
+    save_book = rf"{BIC['base_path']}\{book_name}.txt"
+
+    try:
+        # 中途异常退出
+        with codecs.open(save_file, "r", "utf-8") as fr:
+            url_lines = fr.readlines()
+    except:
+        # 首次执行
+        url_lines = []
+
+    qti.browser.get(begin_url)
+    sleep(5)
+    # 使用包含类名 isHorizontalReader 的 XPath 定位元素
+    # 类中包含 isHorizontalReader 表示处于双页阅读；isNormalReader 表示处于滚动阅读
+    read_model_handle = qti.GetHandle(".//self::button[contains(@class, 'isHorizontalReader')]")
+    if read_model_handle is not None:
+        read_model_handle.click()
+    # # 如果要获得目录的标题需要先展开目录才行
+    # qti.Click(".//self::button[@class='readerControls_item catalog']")
+    # sleep(1)
+    # 获取目录数量. 包含匹配的方式获取
+    begin_index = 0
+    if url_lines == []:
+        GetwereadQQBookAllUrlV3(qti, begin_url, save_file, begin_index=begin_index)
+    else:
+        contents_handles = qti.GetHandles(".//self::li[contains(@class, 'readerCatalog_list_item')]")
+        # for index, content in enumerate(contents_handles):
+        #     # 如果没有登录账号，那么只能获取免费的目录
+        #     print(f"{index}; {content.text}") #content.text 需要先展开书的目录
+        if contents_handles is not None:
+            # 获取书所有的章节url
+            last_url = url_lines[-1].split(";")[-1].strip()
+            begin_index = len(url_lines)
+        # if begin_index != len(contents_handles):
+        #     GetwereadQQBookAllUrlV3(qti, last_url, save_file, begin_index=begin_index)
+
+    script = '''
+// 存储捕获的文本内容
+let capturedText = [];
+// 保存原始的 fillText 方法
+const originalFillText = CanvasRenderingContext2D.prototype.fillText;
+const originalStrokeText = CanvasRenderingContext2D.prototype.strokeText;
+// 重写 fillText 方法， 在调用时将文本内容及其位置、样式等信息存储到 capturedText 数组中，然后调用原始的 fillText 方法。
+CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+    capturedText.push({
+        text: text,
+        x: x,
+        y: y,
+        maxWidth: maxWidth,
+        type: 'fill',
+        style: {
+            font: this.font,
+            fillStyle: this.fillStyle,
+            textAlign: this.textAlign,
+            textBaseline: this.textBaseline,
+            fontSize: this.font.split('px')[0], // 字体大小
+            lineHeight: this.font.split('px')[0] * 1.2, // 行高
+            textWidth: this.measureText(text).width, // 文本宽度
+            textLines: text.split('\\n').length // 文本行数
+        }
+    });
+    return originalFillText.apply(this, arguments);
+};
+// 重写 strokeText 方法，功能与 fillText 方法类似，将文本内容及其相关信息存储到 capturedText 数组中，然后调用原始的 strokeText 方法。
+CanvasRenderingContext2D.prototype.strokeText = function(text, x, y, maxWidth) {
+    capturedText.push({
+        text: text,
+        x: x,
+        y: y,
+        maxWidth: maxWidth,
+        type: 'stroke',
+        style: {
+            font: this.font,
+            strokeStyle: this.strokeStyle,
+            textAlign: this.textAlign,
+            textBaseline: this.textBaseline
+        }
+    });
+    return originalStrokeText.apply(this, arguments);
+};
+// 获取捕获的文本内容
+window.getCapturedText = function() {
+    debugger
+    console.log(capturedText)
+    const sortedText = capturedText.sort((a, b) => {
+        if (Math.abs(a.y - b.y) > 10) {
+            return a.y - b.y;
+        }
+        return a.x - b.x;
+    });
+
+    let result = '';
+    let contents_arr = [];
+    let lastY = null;
+    let last_style = null;
+    sortedText.forEach(item => {
+        if (lastY !== null && Math.abs(item.y - lastY) > 40) {
+            result += '\\n'; // 插入换行符
+            //result += "YYY:"+lastY+'\\n'; // 插入换行符
+            contents_arr.push({
+                "Y":lastY,
+                "content":result,
+                "item":last_style
+            })
+            result = ""
+        }
+        result += item.text + '';
+        lastY = item.y;
+        last_style = item
+    });
+    if (result !== "" && last_style !== null){
+        contents_arr.push({
+            "Y":lastY,
+            "content":result,
+            "item":last_style
+        })
+    }
+    
+
+    // return result.trim();
+    return contents_arr
+};
+// 清除已捕获的文本内容
+window.clearCapturedText = function() {
+    capturedText = [];
+};
+// 恢复原始方法
+window.restoreOriginalMethods = function() {
+    CanvasRenderingContext2D.prototype.fillText = originalFillText;
+    CanvasRenderingContext2D.prototype.strokeText = originalStrokeText;
+};'''
+
+#     script = '''
+# // 存储捕获的文本内容和矩形框信息
+# let capturedText = [];
+# let capturedRects = [];
+
+# // 保存原始的 fillText, strokeText 和 rect 方法
+# const originalFillText = CanvasRenderingContext2D.prototype.fillText;
+# const originalStrokeText = CanvasRenderingContext2D.prototype.strokeText;
+# const originalRect = CanvasRenderingContext2D.prototype.rect;
+
+# // 重写 fillText 方法
+# CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+#     capturedText.push({
+#         text: text,
+#         x: x,
+#         y: y,
+#         maxWidth: maxWidth,
+#         type: 'fill',
+#         style: {
+#             font: this.font,
+#             fillStyle: this.fillStyle,
+#             textAlign: this.textAlign,
+#             textBaseline: this.textBaseline,
+#             fontSize: this.font.split('px')[0], // 字体大小
+#             lineHeight: this.font.split('px')[0] * 1.2, // 行高
+#             textWidth: this.measureText(text).width, // 文本宽度
+#             textLines: text.split('\\n').length // 文本行数
+#         }
+#     });
+#     return originalFillText.apply(this, arguments);
+# };
+
+# // 重写 strokeText 方法
+# CanvasRenderingContext2D.prototype.strokeText = function(text, x, y, maxWidth) {
+#     capturedText.push({
+#         text: text,
+#         x: x,
+#         y: y,
+#         maxWidth: maxWidth,
+#         type: 'stroke',
+#         style: {
+#             font: this.font,
+#             strokeStyle: this.strokeStyle,
+#             textAlign: this.textAlign,
+#             textBaseline: this.textBaseline
+#         }
+#     });
+#     return originalStrokeText.apply(this, arguments);
+# };
+
+# // 重写 rect 方法
+# CanvasRenderingContext2D.prototype.rect = function(x, y, width, height) {
+#     capturedRects.push({
+#         x: x,
+#         y: y,
+#         width: width,
+#         height: height,
+#         type: 'rect',
+#         isRounded: false, // 默认为非圆角矩形
+#         style: {
+#             strokeStyle: this.strokeStyle,
+#             fillStyle: this.fillStyle,
+#             lineWidth: this.lineWidth
+#         }
+#     });
+#     return originalRect.apply(this, arguments);
+# };
+
+# // 获取捕获的文本内容和矩形框信息
+# window.getCapturedTextAndRects = function() {
+#     const sortedText = capturedText.sort((a, b) => {
+#         if (Math.abs(a.y - b.y) > 10) {
+#             return a.y - b.y;
+#         }
+#         return a.x - b.x;
+#     });
+
+#     let result = '';
+#     let contents_arr = [];
+#     let lastY = null;
+#     let last_style = null;
+#     sortedText.forEach(item => {
+#         if (lastY !== null && Math.abs(item.y - lastY) > 40) {
+#             result += '\\n'; // 插入换行符
+#             contents_arr.push({
+#                 "Y": lastY,
+#                 "content": result,
+#                 "item": last_style
+#             });
+#             result = "";
+#         }
+#         result += item.text + '';
+#         lastY = item.y;
+#         last_style = item;
+#     });
+#     if (result !== "" && last_style !== null) {
+#         contents_arr.push({
+#             "Y": lastY,
+#             "content": result,
+#             "item": last_style
+#         });
+#     }
+
+#     return {
+#         text: contents_arr,
+#         rects: capturedRects
+#     };
+# };
+
+# // 清除已捕获的文本内容和矩形框信息
+# window.clearCapturedTextAndRects = function() {
+#     capturedText = [];
+#     capturedRects = [];
+# };
+
+# // 恢复原始方法
+# window.restoreOriginalMethods = function() {
+#     CanvasRenderingContext2D.prototype.fillText = originalFillText;
+#     CanvasRenderingContext2D.prototype.strokeText = originalStrokeText;
+#     CanvasRenderingContext2D.prototype.rect = originalRect;
+# };
+# '''
+
+    img_script='''
+// function getAllImgs(){
+window.getAllImgs = function(){
+    // 获取 <img> 元素
+    const imgElement = document.getElementsByTagName('img');
+
+    let imgs = []
+    for(let handle of imgElement){
+        const classes = handle.className;
+        // width60 wr_absolute wr_readerImage_opacity
+        // width80 wr_absolute wr_readerImage_opacity
+        if (classes.indexOf("wr_absolute wr_readerImage_opacity") ===-1)continue
+        console.log("className",classes)
+        // 获取坐标和长宽信息
+        const rect = handle.getBoundingClientRect();
+        const imgWidth = rect.width;
+        const imgHeight = rect.height;
+        const imgTop = rect.top;
+        const imgLeft = rect.left;
+
+        // 输出信息
+        console.log(`Width: ${imgWidth}, Height: ${imgHeight}`);
+        console.log(`Top: ${imgTop}, Left: ${imgLeft}`);
+
+        // 获取样式信息
+        const style = handle.style;
+        
+
+        // 解析坐标和尺寸
+        const transform = style.transform;
+        const width = style.width;
+        const height = style.height;
+
+        // 提取坐标值
+        const translateX = transform.match(/translate\((\d+)px, (\d+)px\)/)[1];
+        const translateY = transform.match(/translate\((\d+)px, (\d+)px\)/)[2];
+
+        console.log(`X坐标: ${translateX}px`);
+        console.log(`Y坐标: ${translateY}px`);
+        console.log(`宽度: ${width}`);
+        console.log(`高度: ${height}`);
+        imgs.push({
+        "src":handle.src,
+        "X坐标":parseInt(translateX),
+        "Y坐标":parseFloat(translateY),
+        "宽度":width,
+        "高度":height,
+        "className":classes,
+        })
+    }
+    return imgs
+}
+'''
+
+    # 获得已经存储的book的最后一个章节位置
+    try:
+        with codecs.open(save_book, "r", "utf-8") as fr:
+            book_lines = fr.readlines()
+        begin = int(book_lines[-1].split(r"\t")[0].strip())
+    except:
+        begin = 0
+
+    # 再读一次完整的url——list
+    with codecs.open(save_file, "r", "utf-8") as fr:
+        url_lines = fr.readlines()
+    book_content = []
+    try:
+        for index in range(begin, len(url_lines)):
+        # for index, line in enumerate(url_lines):
+            # 注入js之后需要更换页面内容才可以使用 getCapturedText 获得最新的内容，因此需要向上翻一页之后再点击下一章才可以获得当前章节内容
+            # 所以url才需要向下面一样向上取一个
+            # if index == 0:  url = begin_url
+            if index == 0:  url = url_lines[index+1].split(";")[-1].strip()
+            else:           url =  url_lines[index].split(";")[-1].strip()
+            # 测试使用，这是运行需要关闭 begin
+            url = "https://weread.qq.com/web/reader/cf132e10813ab92e9g018088kc81322c012c81e728d9d180"
+            # 测试使用，这是运行需要关闭 end 
             qti.browser.get(url)
             sleep(5)
             # 注入js
@@ -1153,12 +1589,307 @@ window.getAllImgs = function(){
 # with open(r'C:\Dropbox\YAN\D\2025\zhiguol\WeChatRead\example.md', 'w', encoding='utf-8') as file:
 #     file.write(markdown_content)
 #     file.write(r'C:\Dropbox\YAN\D\2025\zhiguol\WeChatRead\test.jpg')
+
+def is_scroll_to_bottom(qti):
+    """
+    判断滚动条是否已经滚动到底部。
+    
+    :param driver: Selenium WebDriver实例
+    :return: True表示滚动到底部，False表示未到底部
+    """
+    # 执行JavaScript代码获取页面高度和滚动位置
+    scroll_height = qti.browser.execute_script("return document.body.scrollHeight;")
+    window_height = qti.browser.execute_script("return window.innerHeight;")
+    scroll_position = qti.browser.execute_script("return window.scrollY;")
+    # 判断是否滚动到底部
+    return scroll_height <= window_height + scroll_position
+
+def 微信读书MainV2测试获取已经被渲染到网页的文本(begin_url, book_name=None):
+    '''
+    @Time    :   2022/10/31 09:50:22
+    @功能    :    该函数只能获取所有已经绘制在canvas中的文本内容，
+    以及穿插在文本中的上传的图片
+    除了上面的功能还具有：
+    获得已经渲染在网页上切实乱序的网站的内容
+    '''
+    qti = selenium_qti(browser=None,
+                       url='https://weread.qq.com/',
+                       chromedriver_path=BIC['chromedriver_path'],
+                       google_data_path=BIC['google_data_path'],
+                       del_userdata=False,
+                       virtual_chrome=True, # 使用虚拟浏览器
+                       debug=False)
+    # qti.OpenChrome()
+    qti.OpenBaseChrome(virtual_browser=True)
+    qti.browser.get(begin_url)
+    # 最大化浏览器窗口
+    qti.browser.maximize_window()
+
+    # 使用包含类名 isHorizontalReader 的 XPath 定位元素
+    # 类中包含 isHorizontalReader 表示处于双页阅读；isNormalReader 表示处于滚动阅读
+    read_model_handle = qti.GetHandle(".//self::button[contains(@class, 'isHorizontalReader')]")
+    if read_model_handle is not None:
+        read_model_handle.click()
+    # # 如果要获得目录的标题需要先展开目录才行
+    # qti.Click(".//self::button[@class='readerControls_item catalog']")
+    # sleep(1)
+    # 获取目录数量. 包含匹配的方式获取
+    
+    script = '''
+// 存储捕获的文本内容
+let capturedText = [];
+// 保存原始的 fillText 方法
+const originalFillText = CanvasRenderingContext2D.prototype.fillText;
+const originalStrokeText = CanvasRenderingContext2D.prototype.strokeText;
+// 重写 fillText 方法， 在调用时将文本内容及其位置、样式等信息存储到 capturedText 数组中，然后调用原始的 fillText 方法。
+CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+    capturedText.push({
+        text: text,
+        x: x,
+        y: y,
+        maxWidth: maxWidth,
+        type: 'fill',
+        style: {
+            font: this.font,
+            fillStyle: this.fillStyle,
+            textAlign: this.textAlign,
+            textBaseline: this.textBaseline,
+            fontSize: this.font.split('px')[0], // 字体大小
+            lineHeight: this.font.split('px')[0] * 1.2, // 行高
+            textWidth: this.measureText(text).width, // 文本宽度
+            textLines: text.split('\\n').length // 文本行数
+        }
+    });
+    return originalFillText.apply(this, arguments);
+};
+// 重写 strokeText 方法，功能与 fillText 方法类似，将文本内容及其相关信息存储到 capturedText 数组中，然后调用原始的 strokeText 方法。
+CanvasRenderingContext2D.prototype.strokeText = function(text, x, y, maxWidth) {
+    capturedText.push({
+        text: text,
+        x: x,
+        y: y,
+        maxWidth: maxWidth,
+        type: 'stroke',
+        style: {
+            font: this.font,
+            strokeStyle: this.strokeStyle,
+            textAlign: this.textAlign,
+            textBaseline: this.textBaseline
+        }
+    });
+    return originalStrokeText.apply(this, arguments);
+};
+// 获取捕获的文本内容
+window.getCapturedText = function() {
+    debugger
+    console.log(capturedText)
+    const sortedText = capturedText.sort((a, b) => {
+        if (Math.abs(a.y - b.y) > 10) {
+            return a.y - b.y;
+        }
+        return a.x - b.x;
+    });
+
+    let result = '';
+    let contents_arr = [];
+    let lastY = null;
+    let last_style = null;
+    sortedText.forEach(item => {
+        if (lastY !== null && Math.abs(item.y - lastY) > 40) {
+            result += '\\n'; // 插入换行符
+            //result += "YYY:"+lastY+'\\n'; // 插入换行符
+            contents_arr.push({
+                "Y":lastY,
+                "content":result,
+                "item":last_style
+            })
+            result = ""
+        }
+        result += item.text + '';
+        lastY = item.y;
+        last_style = item
+    });
+    if (result !== "" && last_style !== null){
+        contents_arr.push({
+            "Y":lastY,
+            "content":result,
+            "item":last_style
+        })
+    }
+    
+
+    // return result.trim();
+    return contents_arr
+};
+// 清除已捕获的文本内容
+window.clearCapturedText = function() {
+    capturedText = [];
+};
+// 恢复原始方法
+window.restoreOriginalMethods = function() {
+    CanvasRenderingContext2D.prototype.fillText = originalFillText;
+    CanvasRenderingContext2D.prototype.strokeText = originalStrokeText;
+};'''
+
+
+    book_content = []
+    try:
+        # 测试使用，这是运行需要关闭 begin
+        # url = "https://weread.qq.com/web/reader/cf132e10813ab92e9g018088ka87322c014a87ff679a21ea"
+        # # 测试使用，这是运行需要关闭 end 
+        # qti.browser.get(url)
+        # sleep(5)
+        # 注入js
+        qti.browser.execute_script(script)
+        # 进入下一章，否则此时 qti.browser.execute_script("return getCapturedText();") 无内容
+        next_handle = qti.GetHandle(xpath=".//self::button[@class='readerFooter_button']")
+        next_handle.click()
+        sleep(5)
+        # 获取内容
+        canvas_info = qti.browser.execute_script("return getCapturedText();")
+        html_content = 循环获得已经渲染到网页的动态内容(qti)
+        print(canvas_info)
+        book_content.append(f"{canvas_info}\n{html_content}")
+        # 清除捕获的文本内容
+        qti.browser.execute_script("clearCapturedText();")
+
+        # 恢复原始方法
+        qti.browser.execute_script("restoreOriginalMethods();")
+        # print(1/0)
+    except Exception as e:
+        print(e)
+        pass
+    qti.Close()
+
+from bs4 import BeautifulSoup
+from 通过位置渲染的文本 import html_innerHtml
+import re
+
+def 循环获得已经渲染到网页的动态内容(qti):
+    '''
+    @Time    :   2025/01/21 17:38:11
+    @功能    :   循环获得已经渲染到网页的所有文本
+    注意这里的文本是随着滚动条而动态出现和动态消失的，一次滚动条每次不能滚动条太多
+    '''
+    context_html_list = []
+    while 1:
+        if is_scroll_to_bottom(qti):
+            print("滚动条已经滚动到底部")
+            break
+        qti.ScrollBar_相对位置(200) #向下滚动100个单位
+        handles = qti.GetHandles(".//self::div[@class='passage-wrapper']//div[@class='passage-content']")
+        for index, handle in enumerate(handles):
+            if index == 0: continue
+            content_html = handle.get_attribute("innerHTML")
+            if content_html not in context_html_list:
+                context_html_list.append(content_html)
+
+        # if len(handles) != 1:
+        #     print(handles[1].get_attribute("innerHTML"))
+        print(len(handles))
+        time.sleep(1)
+        pass
+    context_list = []
+    for index, content_html in enumerate(context_html_list):
+        content = [data_dict["content"] for data_dict in 重组文本(content_html)]
+        context_list.append("\n".join(content))
+    html_content = "\n".join(context_list)
+    return html_content
+
+def 重组文本(html_body):
+    '''
+    @Time    :   2025/01/21 16:34:02
+    @功能    :   None
+    '''
+    # 使用BeautifulSoup解析HTML内容
+    soup = BeautifulSoup(html_body, 'html.parser')
+    # 获取所有具有data-wr-role属性的span元素
+    spans = soup.find_all('span', {'data-wr-role': 'text'})
+
+    # 遍历每个span元素并获取其属性和文本内容
+    # 获取y轴数据
+    text_dict = {}
+    for span in spans:
+        data_wr_id = span.get('data-wr-id')
+        data_wr_role = span.get('data-wr-role')
+        class_name = span.get('class')
+        style = span.get('style')
+        text_content = span.text
+        # # 打印属性和文本内容
+        # print('data-wr-id:', data_wr_id)
+        # print('data-wr-role:', data_wr_role)
+        # print('class:', class_name)
+        # print('style:', style)
+        # print('textContent:', text_content)
+        # print('-------------------------')
+        pattern = r"translate\((\d+)px,\s*(\d+)px\)"
+        match = re.search(pattern, style)
+        if match:
+            x_value = int(match.group(1))  # 提取第一个数值
+            y_value = int(match.group(2))  # 提取第二个数值
+            print(f"X值: {x_value}")
+            print(f"Y值: {y_value}")
+            if y_value in list(text_dict.keys()):
+                text_dict[y_value].append({
+                    "x":x_value,
+                    "text":span.text
+                })
+            else:
+                text_dict[y_value] = [{
+                    "x":x_value,
+                    "text":span.text
+                }]
+        else:
+            continue
+
+    # 排序y轴数据
+    new_y_list = sorted(list(text_dict.keys()))
+    new_text_dict = {}
+    for index, key in enumerate(new_y_list):
+        new_text_dict[key] = text_dict[key]
+
+    # 排序x轴数据
+    for key, data_dict_list in new_text_dict.items():
+        sorted_data = sorted(data_dict_list, key=lambda item: item['x'])
+        content = [data_dict["text"] for data_dict in sorted_data]
+        new_text_dict[key] = {
+            "x":sorted_data[0]["x"],
+            "content":"".join(content)
+        }
+
+    # 根据y轴差值是否超过40来判定是否属于一行
+    # 初始化结果列表
+    result = []
+    # 遍历排序后的键
+    keys = list(new_text_dict.keys())
+    for i in range(len(keys)):
+        current_key = keys[i]
+        current_text = new_text_dict[current_key]
+        # 如果是第一个键，直接添加到结果列表
+        if i == 0:
+            result.append(current_text)
+        else:
+            previous_key = keys[i - 1]
+            # 如果当前键和前一个键的差值不超过40，合并文本
+            if current_key - previous_key <= 40:
+                result[-1]["content"] += current_text["content"]  # 合并到上一个文本
+            else:
+                result.append(current_text)  # 新增一个文本
+    # 输出结果
+    # 可以根据X轴的坐标起始位置判断这段文字所有在的行初始位置
+    for idx, text in enumerate(result):
+        print(f"段落 {idx + 1}: {text['content']}")
+    return result
+
 if __name__=='__main__':
     # MainDemo()
     # 微信读书Main("https://weread.qq.com/web/reader/a57325c05c8ed3a57224187kc81322c012c81e728d9d180")
     # 微信读书Main("https://weread.qq.com/web/reader/77e326b072922e9177e6cb1kecc32f3013eccbc87e4b62e", book_name="对赌_test")
     # 微信读书Main("https://weread.qq.com/web/reader/77e326b072922e9177e6cb1kc81322c012c81e728d9d180", book_name="对赌_test11")
-    微信读书Main("https://weread.qq.com/web/reader/cf132e10813ab92e9g018088", book_name="sbl35")
+    # 微信读书Main("https://weread.qq.com/web/reader/214327005b6b3621437a4f5k16732dc0161679091c5aeb1", book_name="华尔街英语创始人的幸福成功学")
+    微信读书Main("https://weread.qq.com/web/reader/cf132e10813ab92e9g018088ka87322c014a87ff679a21ea", book_name="思辨力35讲：像辩手一样思考")
+    # 微信读书MainV2测试获取已经被渲染到网页的文本("https://weread.qq.com/web/reader/cf132e10813ab92e9g018088ka87322c014a87ff679a21ea", book_name="思辨力35讲：像辩手一样思考")
+    # 重组文本(html_innerHtml)
     # 测试获取文本和图片的信息()
 
 

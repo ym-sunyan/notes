@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        body {
+            /*设置元素的内边距为40%的视口高度。*/
+            padding: 40vh; 
+            /*设置元素的背景图像为线性渐变。渐变方向为125度，颜色从红色（#ff0000）到蓝色（#4562e0），再到深红色（#da6262），最后到黄色（#ffbb00）*/
+            background-image: linear-gradient(125deg, #ff0000, #4562e0, #da6262, #ffbb00);
+            /* 设置背景图像的大小为原始大小的250% */
+            background-size: 250%;
+            /* 应用名为"bgmove"的动画效果，持续时间为20秒，并且无限循环播放。 */
+            animation: bgmove 20s infinite;
+        }
+        /* 上面的代码，它只是静态的画面，我们给它起了一个bgmove动画效果后，接下来我们实现动画效果 */
+        @keyframes bgmove {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .kuang {
+            width: 350px;
+            height: 35px;
+            /* 设置元素的边框圆角半径为15像素 */
+            border-radius: 15px;
+            /* 设置元素的左外边距自动调整，以使元素在水平方向上居中对齐 */
+            margin-left: auto;
+            /* 设置元素的右外边距自动调整，以使元素在水平方向上居中对齐 */
+            margin-right: auto;
+            /* 将元素显示为块级元素，使其占据整个可用宽度，并独占一行 */
+            display: block;
+        }
+        .formBox {
+            width: 460px;
+            height: 350px;
+            background-color: rgba(0, 0, 0, 0);
+            background-color: rgba(0, 0, 0, 0);
+            /* background-color设置div的背景色，如果删除，则div的背景色为透明 */
+            background-color: aliceblue; 
+            /* 元素圆角化 数值越大越圆 */
+            border-radius: 15px;
+            /* margin-left margin-right 内容居中 */
+            margin-left: auto;
+            margin-right: auto;
+            /* opacity属性是半透明效果，数值越接近0越透明 */
+            opacity: 0.5;
+        }
+        .tatle {
+            /* 内容居中 */
+            text-align: center;
+            /* 元素的颜色 */
+            color: rgb(0, 136, 255);
+            /* 元素的上外边距 */
+            margin-top: 40px;
+            /* 设置字体的粗细 */
+            font-weight: 800;
+        }
+        .inbox {
+            width: 350px;
+            height: 35px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        .w {
+            width: 160px;
+            height: 40px;
+            border-radius: 15px;
+            /* 将元素显示为弹性布局容器，使其内部的元素按照弹性布局规则进行排列。 */
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            /* 设置弹性布局容器内部的元素在主轴（默认为水平方向）上居中对齐。 */
+            justify-content: center;
+            /* 设置弹性布局容器内部的元素在交叉轴（默认为垂直方向）上居中对齐。这是对w类的修饰。 */
+            align-items: center;
+        }
+        .box1 {
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="formBox">
+        <form id="login_form" action="" class="FORMF">
+            <br>
+            <h2 class="tatle">登 录</h2>
+            <p><input type="text" name="username" id="username" class="kuang" placeholder="username"></p>
+            <p><input type="password" name="password" id="password" class="kuang" placeholder="password"></p>
+            <a href="" class="kuang">找回密码</a>
+            <div class="inbox">
+                <nav class="box1">
+                    <input id="submit" type="submit" value="登录" class="w">&nbsp;&nbsp;
+                    <input id="register" type="button" value="注册"class="w">
+                </nav>
+            </div>
+        </form>
+    </div>
+    <div style="text-align: center; padding-top: 40px; height: 200px; width: 200px;">
+        <button id="check_token">发送请求，验证token</button>
+    </div>
+    <script>
+        var check_token = document.getElementById('check_token');
+        check_token.addEventListener('click', function() {
+            // 阻止表单默认提交行为
+            event.preventDefault();
+
+            var datas = {
+                content:"我在测试携带token的请求",
+                username:"admin"
+            }
+            debugger
+            // 打印表单数据到控制台
+            fetch('/users/me', {
+                method: 'GET',
+                headers: {
+                    // access_token=
+                    'Content-Type': 'application/json',
+                    "Authorization":"access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcyNDgyOTgxM30.gOzuq_ZM0QbJarnyfk_qd6rICQDK7JPCGa2hdJT6NGw"
+                },
+                // body: JSON.stringify(datas)
+            })
+            .then(response =>response.json())
+            .then(data =>{
+                debugger
+                console.log('Login data:', data)
+            })
+            .catch(error => console.error('Error:', error));
+            });
+    
+        // 获取按钮和表单元素
+        var submitButton = document.getElementById('submit');
+        var loginForm = document.getElementById('login_form');
+
+        // 给按钮添加点击事件监听器
+        submitButton.addEventListener('click', function() {
+            // 阻止表单默认提交行为
+            event.preventDefault();
+
+            // 获取所有表单控件的集合
+        var formElements = loginForm.elements;
+
+        // 创建一个空对象来存储表单数据
+        var formData = {};
+
+        // 遍历表单控件集合
+        for (var i = 0; i < formElements.length; i++) {
+            var element = formElements[i];
+            // 检查控件是否有 name 属性，如果有则添加到 formData 对象中
+            if(element.name !== ""){
+                formData[element.name] = element.value;
+            }
+        }
+
+        // 打印表单数据到控制台
+        console.log(formData);
+        fetch('/token/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            // body: JSON.stringify({
+            //     username: 'your_username',
+            //     password: 'your_password'
+            // })
+            body: JSON.stringify(formData)
+        })
+        .then(response =>response.json())
+        .then(data =>{
+            debugger
+            console.log('Login data:', data)
+            // 存储token到cookies
+            document.cookie = `access_token=${data.access_token}; path=/;`
+        })
+        .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

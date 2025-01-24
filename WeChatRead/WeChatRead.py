@@ -21,6 +21,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import os
+import traceback
 
 
 BIC = BaseInfo().base_info_dict
@@ -104,6 +105,7 @@ def GetwereadQQBookAllUrlV3(qti,  begin_url, save_file, begin_index=0, max_url_l
             fw.write(f"{begin_index};{begin_url}\n")
         begin_index = 1
     index, url_list =begin_index, []
+    sleep(1)
     while 1:
         next_handle = qti.GetHandle(xpath=".//self::button[@class='readerFooter_button']")
         if next_handle is None: 
@@ -1362,15 +1364,15 @@ def 微信读书MainV3(begin_url, book_name=None):
     begin_index = 0
     if url_lines == []:
         GetwereadQQBookAllUrlV3(qti, begin_url, save_file, begin_index=begin_index)
-    # else:
-    #     contents_handles = qti.GetHandles(".//self::li[contains(@class, 'readerCatalog_list_item')]")
-    #     # for index, content in enumerate(contents_handles):
-    #     #     # 如果没有登录账号，那么只能获取免费的目录
-    #     #     print(f"{index}; {content.text}") #content.text 需要先展开书的目录
-    #     if contents_handles is not None:
-    #         # 获取书所有的章节url
-    #         last_url = url_lines[-1].split(";")[-1].strip()
-    #         begin_index = len(url_lines)
+    else:
+        contents_handles = qti.GetHandles(".//self::li[contains(@class, 'readerCatalog_list_item')]")
+        # for index, content in enumerate(contents_handles):
+        #     # 如果没有登录账号，那么只能获取免费的目录
+        #     print(f"{index}; {content.text}") #content.text 需要先展开书的目录
+        if contents_handles is not None:
+            # 获取书所有的章节url
+            last_url = url_lines[-1].split(";")[-1].strip()
+            begin_index = len(url_lines)
 
     #     if begin_index != len(contents_handles):
     #         GetwereadQQBookAllUrlV3(qti, last_url, save_file, begin_index=begin_index)
@@ -1590,7 +1592,7 @@ window.getAllPres = function(){
     with codecs.open(save_file, "r", "utf-8") as fr:
         url_lines = fr.readlines()
     book_content = []
-    begin = 3
+    # begin = 3
     try:
         for index in range(begin, len(url_lines)):
         # for index, line in enumerate(url_lines):
@@ -1598,8 +1600,7 @@ window.getAllPres = function(){
             # 所以url才需要向下面一样向上取一个
             # if index == 0:  url = begin_url
             if index == 0:  url = url_lines[index+1].split(";")[-1].strip()
-            else:           url =  url_lines[index].split(";")[-1].strip()
-
+            else:           url = url_lines[index-1].split(";")[-1].strip()
 
             
             # 当前url如果不是一个正在的url，需要逐层向上找到一个完整的url，并且需要记住向上的次数，这个次数和后面的js注入位置有重要关系
@@ -1631,11 +1632,25 @@ window.getAllPres = function(){
             # 这样的使用相同url的情况。
             # 因此下面的点击 就会因为上面的while 1 的循环得出的url_index值来确定需要连续点击下一页/下一章的次数
             # 为了满足最少点击一次，一次url_index 需要默认+1
-            
+
             # 并且注入js的时间点也需要进行更改
             # 根据上面逐次向上找到真正url的次数，来判断js注入的位置，需要在倒数第二次的时候注入
-            for i in range(url_index+1):
-                if i == url_index:
+            if url_index == 0:
+                # 需要确保 js注入和点击下一页或者下一章至少执行一次
+                qti.browser.execute_script(script)
+                if index == 0:
+                    # 首页需要使用点击上一章才能获取完整
+                    next_handle = qti.GetHandle(xpath=".//self::button[@class='readerHeaderButton']")
+                else:
+                    # 进入下一章，否则此时 qti.browser.execute_script("return getCapturedText();") 无内容
+                    next_handle = qti.GetHandle(xpath=".//self::button[@class='readerFooter_button']")
+                if next_handle is None:
+                    break
+                next_handle.click()
+                sleep(5)
+
+            for i in range(url_index):
+                if i == url_index-1:
                     # 在导数第二次click的时候注入js
                     qti.browser.execute_script(script)
                 if index == 0:
@@ -1656,7 +1671,9 @@ window.getAllPres = function(){
             
             # # 获得所有的图片信息
             # img_dict_list = qti.browser.execute_script("return getAllImgs();")
-            article_title=canvas_info[0]['content'].strip()
+            article_title = "无文本内容"
+            if canvas_info != []:
+                article_title=canvas_info[0]['content'].strip()
             # # 保存图片到本地,并且返回本地地址
             # image_dict_list = DownloadImage(book_name, index, article_title, img_dict_list)
             # new_img_dict = {int(img_dict['Y坐标']):img_dict for img_dict in image_dict_list}
@@ -1675,7 +1692,8 @@ window.getAllPres = function(){
                 if key in list(new_canvas_info):
                     if new_content == []:
                         # 通过判断当前页面的url是否为独立的url来判断是否应该在markdown中生成一级目录结构
-                        if "与上一个url形同" in url_lines[index+1]:
+                        next_index = index + 1
+                        if next_index < len(url_lines) and "与上一个url形同" in url_lines[index]:
                             # 非独立章节
                             new_content.append(new_canvas_info[key])
                         else:
@@ -1695,7 +1713,11 @@ window.getAllPres = function(){
                     # new_content.append(f"{str(imags_dict[key])}\n") #这个用来检测地址
                     image_path = None
                     if imags_dict[key]["image"] is not None:
-                        image_path = imags_dict[key]["image"].replace("\\","/")
+                        # 使用相对地址
+                        route_list = imags_dict[key]["image"].split("\\")
+                        image_path = "/".join(route_list[-2:])
+                        # # 绝对地址
+                        # image_path = imags_dict[key]["image"].replace("\\","/")
                     # ('\n') #换行顶格写，否则会变成文本
                     # (rf'<img src={image_path} alt="测试图片" width="500" height="350">')
                     # ('\n\n') #必须给两个换行
@@ -1705,7 +1727,7 @@ window.getAllPres = function(){
                     image_md = '\n'+rf'''<img src={image_path} alt="测试图片" width="{imags_dict[key]['width']}" height="{imags_dict[key]['heigth']}"  onerror="{onerror}">'''+'\n\n'
                     new_content.append(image_md)
                     pass
-            new_content.insert(1, f'{url_lines[index+1].split(";")[-1]}') #存储url到章节开头
+            new_content.insert(1, f'{url_lines[index].split(";")[-1]}') #存储url到章节开头
             canvas_content = "".join(new_content)
 
             # # 获得所有动态渲染的内容，动态渲染的内容都在网页的最下面
@@ -1723,6 +1745,7 @@ window.getAllPres = function(){
             # print(1/0)
     except Exception as e:
         print(e)
+        traceback.print_exc()
         pass
     qti.Close()
 
@@ -2538,12 +2561,15 @@ if __name__=='__main__':
     # 微信读书MainV3("https://weread.qq.com/web/reader/19532980715c01921954a54", book_name="Python编程：从入门到实践")
     # 微信读书MainV3("https://weread.qq.com/web/reader/cf132e10813ab92e9g018088ka87322c014a87ff679a21ea", book_name="思辨力35讲：像辩手一样思考")
 
-    # 微信读书MainV3("https://weread.qq.com/web/reader/cf132e10813ab92e9g018088kc81322c012c81e728d9d180", book_name="思辨力35讲：像辩手一样思考")
+    微信读书MainV3("https://weread.qq.com/web/reader/cf132e10813ab92e9g018088kc81322c012c81e728d9d180", book_name="思辨力35讲：像辩手一样思考")
 
-    微信读书MainV3("https://weread.qq.com/web/reader/214327005b6b3621437a4f5kc81322c012c81e728d9d180", book_name="赢者之心：华尔街英语创始人的幸福成功学")
+    # 微信读书MainV3("https://weread.qq.com/web/reader/214327005b6b3621437a4f5kc81322c012c81e728d9d180", book_name="赢者之心：华尔街英语创始人的幸福成功学")
+
+    # 微信读书MainV3("https://weread.qq.com/web/reader/77e326b072922e9177e6cb1kc81322c012c81e728d9d180", book_name="对赌")
+
+    # 微信读书MainV3("https://weread.qq.com/web/reader/f1e328e072710bfaf1e87e9k0aa32fc02bf0aa1883c60ae", book_name="明朝那些事儿")
     
-
-
+    
 
 
 

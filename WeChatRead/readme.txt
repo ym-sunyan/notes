@@ -72,3 +72,8 @@
 10 程序根据书的名称生成url链接和书的markdown文件
     书的url链接文件名称格式：url_list_书名称.txt
     书的markdown文件名称格式:书名称.md
+
+2025/01/24 10:18:12
+BUG 1:页面纯图片导致canvas内容为空触发bug。
+     bug位置：article_title=canvas_info[0]['content'].strip()
+修改：将Markdown中的图片的绝对地址改为相对地址

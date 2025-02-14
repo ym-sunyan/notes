@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <link href="./styles.css" rel="stylesheet">
+    <!-- <title>Hello World!</title> -->
+  </head>
+  <body>
+    <h1>Hello World test!</h1>
+    We are using Node.js <span id="node-version"></span>,
+    Chromium <span id="chrome-version"></span>,
+    and Electron <span id="electron-version"></span>.
+
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+    <button id="btn">test</button>
+    <div>
+      <button type="text" id="close_btn">X</button>
+      <button type="text" id="max_btn">口</button>
+      <button type="text" id="min_btn">-</button>
+  </div>
+  <div>
+    <button type="text" id="send">渲染进程到主进程的<b>异步</b>通信</button>
+    <button type="text" id="sendSync">渲染进程到主进程的<b>同步</b>通信</button>
+</div>
+  </body>
+</html>

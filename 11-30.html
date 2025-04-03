@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11-标签语义</title>
+</head>
+
+<body>
+
+    11 告诉标签的作用，已经看过，没必要再看一次<br />
+    12 标题标签 h1-h6 已经看过，没必要再看一次<br />
+    13 段落标签和换行标签, 已经看过没必要再看一次<br />
+    &nbsp;&nbsp;<p> 【p】是一个段落标签，两个段落之间的距离比较高一些</p>
+    &nbsp;&nbsp;<p> 【p】是一个段落标签，两个段落之间的距离比较高一些</p>
+    br: 换行标签,单标签<br />
+    14 案例实例, 已经看过没必要再看一次<br />
+    15 文本格式化标签,强调突出<br />
+    <b> b 是加粗标签</b><br />
+    <strong> strong 是加粗标签。语义更加强烈</strong><br />
+    <i> i 是倾斜标签</i><br />
+    <em> em 是倾斜标签。语义更加强烈</em><br />
+    <s> s 删除线</s><br />
+    <del> del 删除线。语义更加强烈</del><br />
+    <u> u 下划线</u><br />
+    <ins> ins 下划线。语义更加强烈</ins><br />
+    16 盒子标签： div span，用来部署<br />
+    <div>div 单独占一行,第一个div</div>
+    <div>div 单独占一行,第二个div</div>
+    <span>span 非独占一行, 第一个span</span>
+    <span>span 非独占一行,第二个span</span><br />
+    17/18/19 图片标签 img, 单标签。 必须提供src的路径<br />
+    <table>
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>作用</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>src</td>
+                <td>指定图像的路径或URL</td>
+                <td>必须属性，否则不会显示图像。</td>
+            </tr>
+            <tr>
+                <td>alt</td>
+                <td>为图像提供替代文本</td>
+                <td>当图像无法显示时显示此文本，对搜索引擎友好。</td>
+            </tr>
+            <tr>
+                <td>width</td>
+                <td>指定图像的宽度</td>
+                <td>单位为像素（px），可自动按比例调整高度。</td>
+            </tr>
+            <tr>
+                <td>height</td>
+                <td>指定图像的高度</td>
+                <td>单位为像素（px），可自动按比例调整宽度。</td>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>为图像添加提示信息</td>
+                <td>鼠标悬停时显示。</td>
+            </tr>
+            <tr>
+                <td>class</td>
+                <td>为图像添加CSS类</td>
+                <td>用于添加样式或通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>为图像添加唯一标识符</td>
+                <td>用于通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>style</td>
+                <td>直接添加CSS样式</td>
+                <td>不推荐直接在标签中使用，建议通过外部样式表。</td>
+            </tr>
+            <tr>
+                <td>loading</td>
+                <td>控制图像的加载行为</td>
+                <td>值为<code>lazy</code>时，图像会在进入视口时加载。</td>
+            </tr>
+            <tr>
+                <td>srcset</td>
+                <td>为不同分辨率提供图像资源</td>
+                <td>浏览器会根据设备的像素比选择合适的图像。</td>
+            </tr>
+            <tr>
+                <td>sizes</td>
+                <td>指定图像在不同屏幕尺寸下的显示宽度</td>
+                <td>与<code>srcset</code>配合使用，进一步优化性能。</td>
+            </tr>
+            <tr>
+                <td>crossorigin</td>
+                <td>指定图像的跨域请求行为</td>
+                <td>值为<code>anonymous</code>或<code>use-credentials</code>。</td>
+            </tr>
+            <tr>
+                <td>decoding</td>
+                <td>指定图像的解码方式</td>
+                <td>值为<code>sync</code>、<code>async</code>或<code>auto</code>。</td>
+            </tr>
+        </tbody>
+    </table>
+
+    20-目录文件夹和根目录 <br />
+    目录文件夹: 包含整个项目工程的文件夹<br />
+    根目录: 双击打开目录文件夹，这里就是根目录<br />
+    21/22 相对路径 <br />
+    相对路径：以图片相对于html页面的位置
+    <table>
+        <thead>
+            <tr>
+                <th>相对路径分类</th>
+                <th>符号</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>同一级路径</td>
+                <td>无符号</td>
+                <td>图像文件位于HTML文件同一级，如&lt;img src="baidu.gif" /&gt;</td>
+            </tr>
+            <tr>
+                <td>下一级路径</td>
+                <td>/</td>
+                <td>图像文件位于HTML文件下一级，如&lt;img src="images/baidu.gif" /&gt;。</td>
+            </tr>
+            <tr>
+                <td>上一级路径</td>
+                <td>../</td>
+                <td>图像文件位于HTML文件上一级，如&lt;img src="../baidu.gif" /&gt;。</td>
+            </tr>
+        </tbody>
+    </table>
+
+    23 绝对路径：本地没有意义，一般使用网络地址<br />
+    24/25/26 超链接路径<br />
+    <strong><span style="color: red;">外部</span>链接：href的书写格式 比如使用http://...开头</strong><br />
+    <code>&lt;a href="https://www.example.com"&gt;示例链接&lt;/a&gt;</code><br />
+    <strong><span style="color: red;">内部</span>链接：网站内部页面的相互链接</strong><br />
+    书写格式：
+    <code>&lt;a href="html.html"&gt;内部文件链接 html.html是内部文件，内部链接的地址书写格式可以看上面的相对路径&lt;/a&gt;</code><br />
+    <strong><span style="color: red;">空</span>链接：网站内部页面的相互链接</strong><br />
+    <code>&lt;a href="#"&gt;href='#'&lt;/a&gt;</code><br />
+    <strong><span style="color: red;">下载</span>链接：网站内部页面的相互链接</strong><br />
+    <code>&lt;a href="下载的文件地址网络或者本地"&gt;下载的文件地址网络或者本地&lt;/a&gt;</code><br />
+    <strong><span style="color: red;">锚点</span>链接：快速定位到页面中的具体位置</strong><br />
+    <code>&lt;a href="#位置"&gt;href="#"+元素id的名称(比如叫: 位置)，然后下面的某个元素的id="位置" 就可以了&lt;/a&gt;</code><br />
+    <a href="#位置">href="#"+元素id的名称(比如叫: 位置)，然后下面的某个元素的id="位置" 就可以了</a>
+    <div id="返回锚点链接" />
+
+    <table>
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>作用</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>href</td>
+                <td>指定链接的目标URL</td>
+                <td><code>&lt;a href="https://www.example.com"&gt;示例链接&lt;/a&gt;</code></td>
+                <td>必须属性，定义链接的目标地址。</td>
+            </tr>
+            <tr>
+                <td>target</td>
+                <td>指定链接打开的方式</td>
+                <td><code>&lt;a href="https://www.example.com" target="_blank"&gt;示例链接&lt;/a&gt;</code></td>
+                <td>值为<code>_blank</code>时在新标签页打开，<code>_self</code>在当前标签页打开。</td>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>为链接添加提示信息</td>
+                <td><code>&lt;a href="https://www.example.com" title="示例标题"&gt;示例链接&lt;/a&gt;</code></td>
+                <td>鼠标悬停时显示。</td>
+            </tr>
+            <tr>
+                <td>rel</td>
+                <td>定义链接与当前文档的关系</td>
+                <td><code>&lt;a href="https://www.example.com" rel="noopener noreferrer"&gt;示例链接&lt;/a&gt;</code></td>
+                <td>常用值包括<code>noopener</code>和<code>noreferrer</code>，用于安全和性能优化。</td>
+            </tr>
+            <tr>
+                <td>download</td>
+                <td>指定链接下载的文件名</td>
+                <td><code>&lt;a href="file.pdf" download="example.pdf"&gt;下载PDF&lt;/a&gt;</code></td>
+                <td>浏览器会提示下载指定的文件。</td>
+            </tr>
+            <tr>
+                <td>class</td>
+                <td>为链接添加CSS类</td>
+                <td><code>&lt;a href="https://www.example.com" class="link-style"&gt;示例链接&lt;/a&gt;</code></td>
+                <td>用于添加样式或通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>为链接添加唯一标识符</td>
+                <td><code>&lt;a href="https://www.example.com" id="myLink"&gt;示例链接&lt;/a&gt;</code></td>
+                <td>用于通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>style</td>
+                <td>直接添加CSS样式</td>
+                <td><code>&lt;a href="https://www.example.com" style="color: blue;"&gt;示例链接&lt;/a&gt;</code></td>
+                <td>不推荐直接在标签中使用，建议通过外部样式表。</td>
+            </tr>
+            <tr>
+                <td>hreflang</td>
+                <td>指定链接目标的语言</td>
+                <td><code>&lt;a href="https://www.example.com/en" hreflang="en"&gt;英语版&lt;/a&gt;</code></td>
+                <td>用于SEO优化，指定链接目标的语言。</td>
+            </tr>
+            <tr>
+                <td>type</td>
+                <td>指定链接的MIME类型</td>
+                <td><code>&lt;a href="file.pdf" type="application/pdf"&gt;PDF文件&lt;/a&gt;</code></td>
+                <td>用于指定链接文件的类型。</td>
+            </tr>
+            <tr>
+                <td>media</td>
+                <td>指定链接适用的媒体类型</td>
+                <td><code>&lt;a href="print-styles.css" media="print" rel="stylesheet"&gt;打印样式&lt;/a&gt;</code></td>
+                <td>用于指定链接适用的媒体类型。</td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="位置">测试锚点链接</div>
+    <a href="#返回锚点链接">返回锚点链接</a><br />
+    27-注释标签(ctrl + /)和特殊字符 <br />
+    <table>
+        <thead>
+            <tr>
+                <th>特殊字符</th>
+                <th>描述</th>
+                <th>字符的代码</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+                <td>空格符</td>
+                <td>&amp;nbsp;</td>
+            </tr>
+            <tr>
+                <td>&lt;</td>
+                <td>小于号</td>
+                <td>&amp;lt;</td>
+            </tr>
+            <tr>
+                <td>&gt;</td>
+                <td>大于号</td>
+                <td>&amp;gt;</td>
+            </tr>
+            <tr>
+                <td>&amp;</td>
+                <td>和号</td>
+                <td>&amp;amp;</td>
+            </tr>
+            <tr>
+                <td>¥</td>
+                <td>人民币</td>
+                <td>&amp;yen;</td>
+            </tr>
+            <tr>
+                <td>©</td>
+                <td>版权</td>
+                <td>&amp;copy;</td>
+            </tr>
+            <tr>
+                <td>®</td>
+                <td>注册商标</td>
+                <td>&amp;reg;</td>
+            </tr>
+            <tr>
+                <td>°</td>
+                <td>摄氏度</td>
+                <td>&amp;deg;</td>
+            </tr>
+            <tr>
+                <td>±</td>
+                <td>正负号</td>
+                <td>&amp;plusmn;</td>
+            </tr>
+            <tr>
+                <td>×</td>
+                <td>乘号</td>
+                <td>&amp;times;</td>
+            </tr>
+            <tr>
+                <td>÷</td>
+                <td>除号</td>
+                <td>&amp;divide;</td>
+            </tr>
+            <tr>
+                <td>²</td>
+                <td>平方2(上标2)</td>
+                <td>&amp;sup2;</td>
+            </tr>
+            <tr>
+                <td>³</td>
+                <td>立方3(上标3)</td>
+                <td>&amp;sup3;</td>
+            </tr>
+        </tbody>
+    </table>
+    28/29 综合案例 都是基本使用， 唯熟尔<br />
+
+    01-HTML标签(下)导读 无需复看<br />
+    <span id="02-表格标签基本使用/03-表头单元格标签">02-表格标签基本使用/03-表头单元格标签</span> <br />
+    基本功能：展示数据<br>
+    <br />
+    <table border="10" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>元素</th>
+                <th>作用</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&lt;table&gt;</td>
+                <td>定义表格的开始和结束</td>
+                <td>&lt;table&gt;...&lt;/table&gt;</td>
+                <td>包含整个表格内容，可以包含多个行(&lt;tr&gt;)。</td>
+            </tr>
+            <tr>
+                <td>&lt;tr&gt;</td>
+                <td>定义表格中的一行</td>
+                <td>&lt;tr&gt;...&lt;/tr&gt;</td>
+                <td>每一行可以包含多个单元格(&lt;td&gt;或&lt;th&gt;)。</td>
+            </tr>
+            <tr>
+                <td>&lt;th&gt;</td>
+                <td>定义表头单元格</td>
+                <td>&lt;th&gt;标题&lt;/th&gt;</td>
+                <td>通常用于表头行，可以加粗显示，表示列标题。</td>
+            </tr>
+            <tr>
+                <td>&lt;td&gt;</td>
+                <td>定义表格中的一个单元格</td>
+                <td>&lt;td&gt;内容&lt;/td&gt;</td>
+                <td>表格的主体内容，可以包含文本、图片等。</td>
+            </tr>
+            <tr>
+                <td>&lt;thead&gt;</td>
+                <td>定义表格的头部</td>
+                <td>&lt;thead&gt;...&lt;/thead&gt;</td>
+                <td>包含表头行，通常与&lt;tbody&gt;和&lt;tfoot&gt;一起使用。</td>
+            </tr>
+            <tr>
+                <td>&lt;tbody&gt;</td>
+                <td>定义表格的主体</td>
+                <td>&lt;tbody&gt;...&lt;/tbody&gt;</td>
+                <td>包含表格的主要数据行，可以包含多个&lt;tr&gt;。</td>
+            </tr>
+            <tr>
+                <td>&lt;tfoot&gt;</td>
+                <td>定义表格的底部</td>
+                <td>&lt;tfoot&gt;...&lt;/tfoot&gt;</td>
+                <td>通常包含表格的总结行，如合计等。</td>
+            </tr>
+            <tr>
+                <td>colspan</td>
+                <td>合并列</td>
+                <td>&lt;td colspan="2"&gt;...&lt;/td&gt;</td>
+                <td>使单元格横跨多列。</td>
+            </tr>
+            <tr>
+                <td>rowspan</td>
+                <td>合并行</td>
+                <td>&lt;td rowspan="2"&gt;...&lt;/td&gt;</td>
+                <td>使单元格纵跨多行。</td>
+            </tr>
+        </tbody>
+    </table>
+
+    04-表格相关属性(了解) <br />
+    相关属性其实并不常用，实际中会被css取代<br>
+    <strong>下面的所有属性都在table 标签内设置</strong><br>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>作用</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>border</td>
+                <td>设置表格边框的粗细</td>
+                <td>border="1"</td>
+                <td>定义表格边框的像素值，无边框可设置为0或不设置。</td>
+            </tr>
+            <tr>
+                <td>cellpadding</td>
+                <td>设置表格单元格中内容与其边界之间的空间</td>
+                <td>cellpadding="5"</td>
+                <td>值从0到10，定义内容与其边界的空间（已不推荐使用，CSS更常用）。</td>
+            </tr>
+            <tr>
+                <td>cellspacing</td>
+                <td>设置相邻两个表格单元之间的间距</td>
+                <td>cellspacing="10"</td>
+                <td>定义相邻单元格之间的像素值（已不推荐使用，CSS更常用）。</td>
+            </tr>
+            <tr>
+                <td>align</td>
+                <td>设置表格整体的对齐方式</td>
+                <td>align="center"</td>
+                <td>可取值：left, center, right（已不推荐使用，CSS更常用）。</td>
+            </tr>
+            <tr>
+                <td>bgcolor</td>
+                <td>设置表格背景颜色</td>
+                <td>bgcolor="#FFFF00"</td>
+                <td>使用十六进制颜色代码定义背景色（已不推荐使用，CSS更常用）。</td>
+            </tr>
+            <tr>
+                <td>width</td>
+                <td>设置表格的宽度</td>
+                <td>width="100%"</td>
+                <td>可以是具体像素值或百分比。</td>
+            </tr>
+            <tr>
+                <td>height</td>
+                <td>设置表格的高度</td>
+                <td>height="200"</td>
+                <td>定义表格的高度，单位为像素。</td>
+            </tr>
+            <tr>
+                <td>colspan</td>
+                <td>设置表格单元格横跨的列数</td>
+                <td>colspan="2"</td>
+                <td>定义单元格应该横跨的列数。</td>
+            </tr>
+            <tr>
+                <td>rowspan</td>
+                <td>设置表格单元格纵跨的行数</td>
+                <td>rowspan="2"</td>
+                <td>定义单元格应该纵跨的行数。</td>
+            </tr>
+            <tr>
+                <td>valign</td>
+                <td>设置表格单元格内容的垂直对齐方式</td>
+                <td>valign="top"</td>
+                <td>可取值：top, middle, bottom（已不推荐使用，CSS更常用）。</td>
+            </tr>
+        </tbody>
+    </table>
+    05-小说排行榜案例 唯熟尔<br />
+    06-表格结构标签<br />
+    见 <a href="#02-表格标签基本使用/03-表头单元格标签">02-表格标签基本使用/03-表头单元格标签</a><br />
+    07-合并单元格 <br />
+    <strong>跨行合并(上下合并)</strong> 最上侧的单元格作为目标单元格，写合并代码<br />
+    <strong>快列合并(左右合并)</strong> 最左侧的单元格作为目标单元格，写合并代码<br />
+    见 <a href="#02-表格标签基本使用/03-表头单元格标签">02-表格标签基本使用/03-表头单元格标签</a><br />
+    步骤1：确定跨行还是跨列，使用的属性不同<br />
+    步骤2：找到目标单元格。写合并方式=合并的单元格数量。比如&lt;td colspan="2"&gt;href='#'&lt;/td&gt;<br />
+    步骤3：删除行或者列后面的单元格就是不要写后的colspan-1或者rowspan-1个td<br />
+    以下是用来测试合并
+    <table border="1" cellpadding="5" cellspacing="0" width="500">
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>作用</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">合并后面的两列，在同一个tr中减少colspan(3)-1个td</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td rowspan="3">在下面的rowspan(3)-1个tr中删除对于位置的td，比如这里是第一个td，那么后面的连续两个tr中的第一个td都不要在写了</td>
+                <td>5</td>
+                <td rowspan="4">在下面的rowspan(4)-1个tr中删除对于位置的td，比如这里是第三个td，那么后面的连续两个tr中的第三个td都不要在写了</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>14</td>
+                <td>15</td>
+            </tr>
+
+        </tbody>
+    </table>
+    08-表格总结 <span style="color: brown;">可以复看</span><br />
+    09-无序列表(<strong style="color: red;">重点</strong>) <br />
+    <pre>
+        <code>
+            &lt;ul&gt;<br>
+                &lt;li&gt;列表项1&lt;/li&gt;<br>
+                &lt;li&gt;列表项2&lt;/li&gt;<br>
+                &lt;li&gt;列表项3&lt;/li&gt;<br>
+                &lt;!-- 可以根据需要继续添加更多的列表项 --&gt;<br>
+            &lt;/ul&gt;<br>
+        </code>
+    </pre>
+    <ul>
+        <li>列表项1</li>
+        <li>列表项2</li>
+        <li>列表项3</li>
+    </ul>
+    <table id="见上面" border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>标签/属性</th>
+                <th>作用</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&lt;ul&gt;</td>
+                <td>定义无序列表</td>
+                <td>&lt;ul&gt;&lt;li&gt;列表项&lt;/li&gt;&lt;/ul&gt;</td>
+                <td>创建一个无序列表，列表项默认以圆点显示。</td>
+            </tr>
+            <tr>
+                <td>&lt;li&gt;</td>
+                <td>定义列表项</td>
+                <td>&lt;li&gt;列表项内容&lt;/li&gt;</td>
+                <td>用于在&lt;ul&gt;或&lt;ol&gt;中定义单个列表项。</td>
+            </tr>
+            <tr>
+                <td>type</td>
+                <td>为&lt;ul&gt;定义列表项的类型</td>
+                <td>&lt;ul type="square"&gt;...&lt;/ul&gt;</td>
+                <td>可取值：disc（默认）、circle、square。</td>
+            </tr>
+            <tr>
+                <td>start</td>
+                <td>为&lt;ol&gt;定义起始数字</td>
+                <td>&lt;ol start="5"&gt;...&lt;/ol&gt;</td>
+                <td>定义有序列表的起始数字。</td>
+            </tr>
+            <tr>
+                <td>value</td>
+                <td>为&lt;li&gt;定义其在有序列表中的值</td>
+                <td>&lt;li value="3"&gt;...&lt;/li&gt;</td>
+                <td>定义列表项的值，影响其在有序列表中的显示顺序。</td>
+            </tr>
+            <tr>
+                <td>class</td>
+                <td>为元素添加CSS类</td>
+                <td>&lt;ul class="my-list"&gt;...&lt;/ul&gt;</td>
+                <td>用于添加样式或通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>为元素添加唯一标识符</td>
+                <td>&lt;li id="item1"&gt;...&lt;/li&gt;</td>
+                <td>用于通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>style</td>
+                <td>直接添加CSS样式</td>
+                <td>&lt;li style="color: red;"&gt;...&lt;/li&gt;</td>
+                <td>不推荐直接在标签中使用，建议通过外部样式表。</td>
+            </tr>
+            <tr>
+                <td>reversed</td>
+                <td>定义有序列表的顺序</td>
+                <td>&lt;ol reversed&gt;</td>
+                <td>仅适用于&lt;ol&gt;标签，使列表项逆序显示。</td>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>定义元素的标题信息</td>
+                <td>&lt;li title="提示信息"&gt;</td>
+                <td>鼠标悬停时显示的提示信息。</td>
+            </tr>
+            <tr>
+                <td>value</td>
+                <td>定义列表项在有序列表中的值</td>
+                <td>&lt;li value="3"&gt;</td>
+                <td>仅适用于&lt;ol&gt;标签，定义列表项的值。</td>
+            </tr>
+            <tr>
+                <td>dir</td>
+                <td>定义内容的方向</td>
+                <td>&lt;ul dir="rtl"&gt;</td>
+                <td>可取值：ltr（默认，从左到右）、rtl（从右到左）。</td>
+            </tr>
+            <tr>
+                <td>lang</td>
+                <td>定义元素内容的语言</td>
+                <td>&lt;ul lang="en"&gt;</td>
+                <td>定义元素内容的语言代码。</td>
+            </tr>
+        </tbody>
+    </table>
+
+    10-有序列表 <br />
+    属性和注意事项基本一致，<a href="#见上面">见上面</a>
+    <pre>
+        <code>
+            &lt;ol type="i"&gt;<br>
+                &lt;li&gt;列表项1&lt;/li&gt;<br>
+                &lt;li&gt;列表项2&lt;/li&gt;<br>
+                &lt;li&gt;列表项3&lt;/li&gt;<br>
+                &lt;!-- 可以根据需要继续添加更多的列表项 --&gt;<br>
+            &lt;/ol&gt;<br>
+        </code>
+    </pre>
+    <ol type="i">
+        <li>列表项1</li>
+        <li>列表项2</li>
+        <li>列表项3</li>
+    </ol>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>作用</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>type</td>
+                <td>定义列表项的编号类型</td>
+                <td>&lt;ol type="A"&gt;</td>
+                <td>可取值：1（默认）、A、a、I、i。</td>
+            </tr>
+            <tr>
+                <td>start</td>
+                <td>定义有序列表的起始数字</td>
+                <td>&lt;ol start="5"&gt;</td>
+                <td>定义列表的开始编号。</td>
+            </tr>
+            <tr>
+                <td>reversed</td>
+                <td>定义列表是否逆序显示</td>
+                <td>&lt;ol reversed&gt;</td>
+                <td>使列表项逆序显示。</td>
+            </tr>
+            <tr>
+                <td>class</td>
+                <td>为元素添加CSS类</td>
+                <td>&lt;ol class="my-list"&gt;</td>
+                <td>用于添加样式或通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>为元素添加唯一标识符</td>
+                <td>&lt;ol id="myList"&gt;</td>
+                <td>用于通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>style</td>
+                <td>直接添加CSS样式</td>
+                <td>&lt;ol style="color: red;"&gt;</td>
+                <td>不推荐直接在标签中使用，建议通过外部样式表。</td>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>定义元素的标题信息</td>
+                <td>&lt;ol title="提示信息"&gt;</td>
+                <td>鼠标悬停时显示的提示信息。</td>
+            </tr>
+            <tr>
+                <td>lang</td>
+                <td>定义元素内容的语言</td>
+                <td>&lt;ol lang="en"&gt;</td>
+                <td>定义元素内容的语言代码。</td>
+            </tr>
+            <tr>
+                <td>dir</td>
+                <td>定义内容的方向</td>
+                <td>&lt;ol dir="rtl"&gt;</td>
+                <td>可取值：ltr（默认，从左到右）、rtl（从右到左）。</td>
+            </tr>
+            <tr>
+                <td>data-*</td>
+                <td>定义自定义属性</td>
+                <td>&lt;ol data-role="list"&gt;</td>
+                <td>用于存储页面或应用程序的私有自定义数据。</td>
+            </tr>
+        </tbody>
+    </table>
+    11 自定义列表 <strong style="color: red;">重点</strong><br />
+    样例<br>
+    <pre>
+        &lt;dl&gt;
+            &lt;dt&gt;老大&lt;/dt&gt;
+            &lt;dd&gt;小弟1&lt;/dd&gt;
+            &lt;dd&gt;小弟2&lt;/dd&gt;
+        &lt;/dl&gt;
+    </pre>
+    <dl>
+        <dt>老大(dt 一般一组中出现一个)</dt>
+        <dd>小弟1(dd 一般一组中出现多个)</dd>
+        <dd>小弟2(dd 一般一组中出现多个)</dd>
+    </dl>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>标签/属性</th>
+                <th>作用</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&lt;dl&gt;</td>
+                <td>定义一个定义列表</td>
+                <td>&lt;dl&gt;...&lt;/dl&gt;</td>
+                <td>包含一组术语及其定义。</td>
+            </tr>
+            <tr>
+                <td>&lt;dt&gt;</td>
+                <td>定义列表中的一个术语</td>
+                <td>&lt;dt&gt;术语&lt;/dt&gt;</td>
+                <td>通常与&lt;dd&gt;标签一起使用，定义术语。</td>
+            </tr>
+            <tr>
+                <td>&lt;dd&gt;</td>
+                <td>定义列表中术语的描述或解释</td>
+                <td>&lt;dd&gt;描述&lt;/dd&gt;</td>
+                <td>通常与&lt;dt&gt;标签一起使用，提供术语的描述。</td>
+            </tr>
+            <tr>
+                <td>class</td>
+                <td>为元素添加CSS类</td>
+                <td>&lt;dl class="my-definitions"&gt;</td>
+                <td>用于添加样式或通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>为元素添加唯一标识符</td>
+                <td>&lt;dt id="term1"&gt;</td>
+                <td>用于通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>style</td>
+                <td>直接添加CSS样式</td>
+                <td>&lt;dd style="color: red;"&gt;</td>
+                <td>不推荐直接在标签中使用，建议通过外部样式表。</td>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>定义元素的标题信息</td>
+                <td>&lt;dt title="提示信息"&gt;</td>
+                <td>鼠标悬停时显示的提示信息。</td>
+            </tr>
+            <tr>
+                <td>lang</td>
+                <td>定义元素内容的语言</td>
+                <td>&lt;dl lang="en"&gt;</td>
+                <td>定义元素内容的语言代码。</td>
+            </tr>
+            <tr>
+                <td>dir</td>
+                <td>定义内容的方向</td>
+                <td>&lt;dl dir="rtl"&gt;</td>
+                <td>可取值：ltr（默认，从左到右）、rtl（从右到左）。</td>
+            </tr>
+            <tr>
+                <td>data-*</td>
+                <td>定义自定义属性</td>
+                <td>&lt;dl data-role="definitions"&gt;</td>
+                <td>用于存储页面或应用程序的私有自定义数据。</td>
+            </tr>
+        </tbody>
+    </table>
+    12 列表总结<br />
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>标签名</th>
+                <th>定义</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&lt;ul&gt;&lt;/ul&gt;</td>
+                <td>无序标签</td>
+                <td>里面只能包含li，没有顺序，使用较多。li里面可以包含任何标签。</td>
+            </tr>
+            <tr>
+                <td>&lt;ol&gt;&lt;/ol&gt;</td>
+                <td>有序标签</td>
+                <td>里面只能包含li，有顺序，使用相对较少。li里面可以包含任何标签。</td>
+            </tr>
+            <tr>
+                <td>&lt;dl&gt;&lt;/dl&gt;</td>
+                <td>自定义列表</td>
+                <td>里面只能包含dt和dd。dt和dd里面可以放任何标签。</td>
+            </tr>
+        </tbody>
+    </table>
+    <strong>ul ol dl使用场景</strong>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>标签</th>
+                <th>使用场景</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&lt;ul&gt;</td>
+                <td>无序列表</td>
+                <td>&lt;ul&gt;&lt;li&gt;项目1&lt;/li&gt;&lt;li&gt;项目2&lt;/li&gt;&lt;/ul&gt;</td>
+                <td>用于显示没有特定顺序的项目列表，如购物清单、服务列表等。</td>
+            </tr>
+            <tr>
+                <td>&lt;ol&gt;</td>
+                <td>有序列表</td>
+                <td>&lt;ol&gt;&lt;li&gt;步骤1&lt;/li&gt;&lt;li&gt;步骤2&lt;/li&gt;&lt;/ol&gt;</td>
+                <td>用于显示有特定顺序的项目列表，如操作指南、排名列表等。</td>
+            </tr>
+            <tr>
+                <td>&lt;dl&gt;</td>
+                <td>定义列表</td>
+                <td>&lt;dl&gt;&lt;dt&gt;术语&lt;/dt&gt;&lt;dd&gt;定义&lt;/dd&gt;&lt;/dl&gt;</td>
+                <td>用于显示术语和其定义或描述，如字典条目、术语解释等。</td>
+            </tr>
+        </tbody>
+    </table>
+
+    13 表单使用场景以及分类 无需复看<br />
+    14 表单域<br />
+    <pre>
+    &lt;form action="url地址" method="提交方式" name="表单域名称"&gt;
+        各种表单元素控件
+    &lt;/form&gt;
+    </pre>
+    <form action="demo.php" method="POST" name="name">
+        各种表单元素控件
+    </form>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>作用</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong style="color: red;">action</strong></td>
+                <td>定义表单数据提交到的URL</td>
+                <td>&lt;form action="submit.php"&gt;</td>
+                <td>必须属性，指定表单数据提交的服务器URL。</td>
+            </tr>
+            <tr>
+                <td><strong style="color: red;">method</strong></td>
+                <td>定义表单数据提交的方式</td>
+                <td>&lt;form method="post"&gt;</td>
+                <td>可取值：get（默认）或post。</td>
+            </tr>
+            <tr>
+                <td>enctype</td>
+                <td>定义表单数据的编码类型</td>
+                <td>&lt;form enctype="multipart/form-data"&gt;</td>
+                <td>当表单中包含文件上传时使用。</td>
+            </tr>
+            <tr>
+                <td><strong style="color: red;">name</strong></td>
+                <td>定义表单的名称</td>
+                <td>&lt;form name="myForm"&gt;</td>
+                <td>用于JavaScript和DOM脚本。</td>
+            </tr>
+            <tr>
+                <td>target</td>
+                <td>定义表单提交后的目标窗口或框架</td>
+                <td>&lt;form target="_blank"&gt;</td>
+                <td>可取值：_blank（新窗口）、_self（当前窗口，默认）等。</td>
+            </tr>
+            <tr>
+                <td>autocomplete</td>
+                <td>定义表单是否可以自动完成</td>
+                <td>&lt;form autocomplete="on"&gt;</td>
+                <td>可取值：on（启用自动完成）、off（禁用自动完成）。</td>
+            </tr>
+            <tr>
+                <td>novalidate</td>
+                <td>定义表单提交时是否进行验证</td>
+                <td>&lt;form novalidate&gt;</td>
+                <td>如果设置为novalidate，则提交时不会进行验证。</td>
+            </tr>
+            <tr>
+                <td>accept-charset</td>
+                <td>定义表单接受的字符编码类型</td>
+                <td>&lt;form accept-charset="UTF-8"&gt;</td>
+                <td>指定表单数据的字符编码。</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <strong style="color: red;">一个完成的实例</strong>
+    <pre>
+    &lt;form&gt;
+        &lt;!-- text 文本框 用户可以里面输入任何文字 --&gt;
+        用户名：&lt;input type="text" name="username" value="请输入用户名"&gt;&lt;br&gt;
+        &lt;!-- password 密码框 用户看不见输入的密码 --&gt;
+        密码：&lt;input type="password" name="pwd" &gt; &lt;br&gt;
+        &lt;!-- radio 单选按钮 可以实现单选 --&gt;
+        &lt;!-- name 是表单元素名字 这里性别单选按钮必须有相同的 name 才可以实现单选1 --&gt;
+        &lt;!-- 单选按钮和复选框可以设置checked 属性，当页面打开的时候就可以默认选中这个按钮 --&gt;
+        性别：男 &lt;input type="radio" name="sex" value="男"&gt;女 &lt;input type="radio"name="sex" value="女" checked="checked"&gt; 人妖 &lt;input type="radio" name="sex" value="人妖"&gt; &lt;br&gt;
+        &lt;!-- checkbox 复选框 可以实现多选 --&gt;
+        爱好：吃饭 &lt;input type="checkbox" name="hobby" value="吃饭"&gt;睡觉 &lt;input type="checkbox" name="hobby"&gt; 打豆豆 &lt;input type="checkbox" name="hobby"checked="checked"&gt;
+    &lt;/form&gt;
+    </pre>
+    <pre>
+        &lt;form action="xxx.php" method="get"&gt;
+            &lt;!-- text 文本框 用户可以里面输入任何文字 --&gt;
+            用户名：&lt;input type="text" name="username" value="请输入用户名" maxlength="6"&gt; &lt;br&gt;
+            &lt;!-- password 密码框 用户看不见输入的密码 --&gt;
+            密码：&lt;input type="password" name="pwd"&gt; &lt;br&gt;
+        
+            &lt;!-- radio 单选按钮 可以实现单选 --&gt;
+            &lt;!-- name 是表单元素名字 这里性别单选按钮必须有相同的名字name 才可以实现多选1 --&gt;
+            &lt;!-- 单选按钮和复选框可以设置checked 属性，当页面打开的时候就可以默认选中这个按钮 --&gt;
+            性别：男 &lt;input type="radio" name="sex" value="男"&gt;女 &lt;input type="radio"name="sex" value="女" checked="checked"&gt;
+            人妖 &lt;input type="radio" name="sex" value="人妖"&gt; &lt;br&gt;
+        
+            &lt;!-- checkbox 复选框 可以实现多选 --&gt;
+            爱好：吃饭 &lt;input type="checkbox" name="hobby" value="吃饭"&gt;睡觉 &lt;input type="checkbox" name="hobby"&gt; 打豆豆 &lt;input
+            type="checkbox" name="hobby"checked="checked"&gt;
+        
+            &lt;!-- 点击了提交按钮，可以把 表单域 form 里面的表单元素 里面的值 提交给后台服务器 --&gt;
+            &lt;input type="submit" value="免费注册"&gt;
+        
+            &lt;!-- 重置按钮可以还原表单元素初始的默认状态 --&gt;
+            &lt;input type="reset" value="重新填写"&gt;
+        
+            &lt;!-- 普通按钮 button 后期结合js 搭配使用 --&gt;
+            &lt;input type="button" value="获取短信验证码"&gt; &lt;br&gt;
+        
+            &lt;!-- 文件域 使用场景 上传文件使用的 --&gt;
+            上传头像：&lt;input type="file"&gt;
+        &lt;/form&gt;
+    </pre>
+    <form action="xxx.php" method="get" style="background-color: antiquewhite;">
+        <!-- text 文本框 用户可以里面输入任何文字 -->
+        用户名：<input type="text" name="username" value="请输入用户名" maxlength="6">
+        <br>
+        <!-- password 密码框 用户看不见输入的密码 -->
+        密码：<input type="password" name="pwd"> <br>
+
+        <!-- radio 单选按钮 可以实现单选 -->
+        <!-- name 是表单元素名字 这里性别单选按钮必须有相同的名字name 才可以实现多选1 -->
+        <!-- 单选按钮和复选框可以设置checked 属性，当页面打开的时候就可以默认选中这个按钮 -->
+        性别：男 <input type="radio" name="sex" value="男">女 <input type="radio" name="sex" value="女" checked="checked">
+        人妖 <input type="radio" name="sex" value="人妖"> <br>
+
+        <!-- checkbox 复选框 可以实现多选 -->
+        爱好：吃饭 <input type="checkbox" name="hobby" value="吃饭">睡觉 <input type="checkbox" name="hobby"> 打豆豆 <input
+            type="checkbox" name="hobby" checked="checked"><br>
+
+        <!-- 点击了提交按钮，可以把 表单域 form 里面的表单元素 里面的值 提交给后台服务器 -->
+        <input type="submit" value="免费注册">
+
+        <!-- 重置按钮可以还原表单元素初始的默认状态 -->
+        <input type="reset" value="重新填写">
+
+        <!-- 普通按钮 button 后期结合js 搭配使用 -->
+        <input type="button" value="获取短信验证码"> <br>
+
+        <!-- 文件域 使用场景 上传文件使用的 -->
+        上传头像：<input type="file">
+    </form>
+
+    15 input之type属性文本框和密码框<br />
+    文本框:text
+    密码框:password
+    <strong>intput的type值表</strong>
+    <table id="intput的type值表" border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>属性值</th>
+                <th>描述</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>button</td>
+                <td>定义可点击按钮（多数情况下，用于通过 JavaScript 启动脚本）。</td>
+            </tr>
+            <tr>
+                <td>checkbox</td>
+                <td>定义复选框。</td>
+            </tr>
+            <tr>
+                <td>file</td>
+                <td>定义输入字段和 "浏览" 按钮，供文件上传。</td>
+            </tr>
+            <tr>
+                <td>hidden</td>
+                <td>定义隐藏的输入字段。</td>
+            </tr>
+            <tr>
+                <td>image</td>
+                <td>定义图像形式的提交按钮。</td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td>定义密码字段。该字段中的字符被掩码。</td>
+            </tr>
+            <tr>
+                <td>radio</td>
+                <td>定义单选按钮。</td>
+            </tr>
+            <tr>
+                <td>reset</td>
+                <td>定义重置按钮。重置按钮会清除表单中的所有数据。</td>
+            </tr>
+            <tr>
+                <td>submit</td>
+                <td>定义提交按钮。提交按钮会把表单数据发送到服务器。</td>
+            </tr>
+            <tr>
+                <td>text</td>
+                <td>定义单行的输入字段，用户可在其中输入文本。默认宽度为 20 个字符。</td>
+            </tr>
+        </tbody>
+    </table>
+    input 标签type的其他属性
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>属性值</th>
+                <th>描述</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong style="color: red;">type</strong></td>
+                <td>text, password, checkbox, radio, file, hidden, etc.</td>
+                <td>定义输入字段的类型。</td>
+            </tr>
+            <tr>
+                <td><strong style="color: red;">name</strong></td>
+                <td>由用户自定义</td>
+                <td>定义 input 元素的名称。<strong style="color: red;">注意:</strong> 单选框和复选框需要使用相同的name</td>
+            </tr>
+            <tr>
+                <td><strong style="color: red;">value</strong></td>
+                <td>由用户自定义</td>
+                <td>规定 input 元素的值。<strong style="color: red;">注意:</strong> button类型时候value设置的是显示在按钮上的内容</td>
+            </tr>
+            <tr>
+                <td><strong style="color: red;">checked</strong></td>
+                <td>checked</td>
+                <td><strong>针对单选框和复选框</strong>. 规定此 input 元素首次加载时应当被选中。</td>
+            </tr>
+            <tr>
+                <td><strong style="color: red;">maxlength</strong></td>
+                <td>正整数</td>
+                <td>规定输入字段中的字符的最大长度。</td>
+            </tr>
+            <tr>
+                <td>size</td>
+                <td>正整数</td>
+                <td>规定输入字段的宽度，以字符为单位。</td>
+            </tr>
+            <tr>
+                <td>readonly</td>
+                <td>readonly</td>
+                <td>规定输入字段为只读。</td>
+            </tr>
+            <tr>
+                <td>disabled</td>
+                <td>disabled</td>
+                <td>规定输入字段被禁用。</td>
+            </tr>
+            <tr>
+                <td>placeholder</td>
+                <td>示例文本</td>
+                <td>规定在输入字段中显示的提示文本。</td>
+            </tr>
+            <tr>
+                <td>required</td>
+                <td>required</td>
+                <td>规定输入字段在提交表单之前必须填写。</td>
+            </tr>
+            <tr>
+                <td>pattern</td>
+                <td>正则表达式</td>
+                <td>规定输入字段值必须匹配的模式（正则表达式）。</td>
+            </tr>
+            <tr>
+                <td>min, max</td>
+                <td>数值</td>
+                <td>规定输入字段的最小值和最大值。</td>
+            </tr>
+            <tr>
+                <td>step</td>
+                <td>数值</td>
+                <td>规定输入字段的合法数字间隔。</td>
+            </tr>
+        </tbody>
+    </table>
+
+    16 input之type属性单选按钮和复选框<br />
+    单选按钮:radio <br />
+    复选框:checkbox <br />
+    见 <a href="#intput的type值表">intput的type值表</a><br />
+    17 input之name和value属性<br />
+    见 <a href="#intput的type值表">intput的type值表</a><br />
+    18 input之checked和maxlength属性<br />
+    见 <a href="#intput的type值表">intput的type值表</a><br />
+    19 input表单元素四个属性使用场景课堂问答<br />
+    <strong>13-18的内容 无需复看</strong><br>
+    20 input之type属性提交和重置按钮<br />
+    提交: submit
+    重置: reset
+    见 <a href="#intput的type值表">intput的type值表</a><br />
+    21 input之type属性普通按钮和文本域<br />
+    见 <a href="#intput的type值表">intput的type值表</a><br />
+    22-label标签 <br />
+    <pre>
+        &lt;label for="sex"&gt;男&lt;/label&gt;
+        &lt;input type="radio" name="sex" id="sex" /&gt;
+    </pre>
+    <label for="sex">男</label>
+    <input type="radio" name="sex" id="sex" /><br>
+
+    <strong style="color: red;">重点: </strong>label标签的<strong style="color: red;">for属性</strong>应当和相关元素的<strong
+        style="color: red;">id属性</strong>相同,如上<br />
+    23-select下拉表单 <br />
+    <span style="color: red;">selected="selected" 表示默认选中</span>
+    <pre>
+        &lt;select&gt;
+        &lt;option&gt;选项1&lt;/option&gt;
+        &lt;option selected="selected"&gt;选项2&lt;/option&gt;
+        &lt;option&gt;选项3&lt;/option&gt;
+        &lt;/select&gt;
+    </pre>
+    <select>
+        <option>选项1</option>
+        <option selected="selected">选项2</option>
+        <option>选项3</option>
+    </select><br />
+
+    24-textarea文本域标签 <br />
+    使用场景：用作大量文本/多行文本输入 比如：留言板 评论 介绍等等<br />
+    <div>从该链接导出excel失败<a
+            href="https://confluence.qualcomm.com/confluence/display/MLGCN/Kaanapali+China+OEMs%28VOXH%29+FR+Tracker"
+            target="_blank">https://confluence.qualcomm.com/confluence/display/MLGCN/Kaanapali+China+OEMs%28VOXH%29+FR+Tracker</a>
+    </div>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>作用</th>
+                <th>示例</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>cols</td>
+                <td>定义文本区域的宽度</td>
+                <td>&lt;textarea cols="30"&gt;</td>
+                <td>定义文本区域的列数。</td>
+            </tr>
+            <tr>
+                <td>rows</td>
+                <td>定义文本区域的高度</td>
+                <td>&lt;textarea rows="5"&gt;</td>
+                <td>定义文本区域的行数。</td>
+            </tr>
+            <tr>
+                <td>placeholder</td>
+                <td>定义提示文本</td>
+                <td>&lt;textarea placeholder="输入内容..."&gt;</td>
+                <td>在文本区域中显示提示文本。</td>
+            </tr>
+            <tr>
+                <td>readonly</td>
+                <td>定义文本区域为只读</td>
+                <td>&lt;textarea readonly&gt;</td>
+                <td>文本区域内容不可编辑。</td>
+            </tr>
+            <tr>
+                <td>disabled</td>
+                <td>定义文本区域为禁用状态</td>
+                <td>&lt;textarea disabled&gt;</td>
+                <td>文本区域不可用。</td>
+            </tr>
+            <tr>
+                <td>required</td>
+                <td>定义文本区域为必填项</td>
+                <td>&lt;textarea required&gt;</td>
+                <td>表单提交时必须填写。</td>
+            </tr>
+            <tr>
+                <td>maxlength</td>
+                <td>定义文本区域中的最大字符数</td>
+                <td>&lt;textarea maxlength="100"&gt;</td>
+                <td>限制用户输入的字符数。</td>
+            </tr>
+            <tr>
+                <td>minlength</td>
+                <td>定义文本区域中的最小字符数</td>
+                <td>&lt;textarea minlength="10"&gt;</td>
+                <td>限制用户输入的最小字符数。</td>
+            </tr>
+            <tr>
+                <td>wrap</td>
+                <td>定义文本换行</td>
+                <td>&lt;textarea wrap="soft"&gt;</td>
+                <td>可取值：hard（默认，换行符会被发送到服务器）、soft（文本换行，但换行符不会被发送）。</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>定义文本区域的名称</td>
+                <td>&lt;textarea name="comment"&gt;</td>
+                <td>用于表单提交时标识文本区域。</td>
+            </tr>
+            <tr>
+                <td>id</td>
+                <td>定义文本区域的唯一标识符</td>
+                <td>&lt;textarea id="myTextarea"&gt;</td>
+                <td>用于通过JavaScript或CSS选择文本区域。</td>
+            </tr>
+            <tr>
+                <td>class</td>
+                <td>定义CSS类</td>
+                <td>&lt;textarea class="myClass"&gt;</td>
+                <td>用于添加样式或通过JavaScript操作。</td>
+            </tr>
+            <tr>
+                <td>style</td>
+                <td>定义内联样式</td>
+                <td>&lt;textarea style="background-color: yellow;"&gt;</td>
+                <td>直接在标签中定义样式。</td>
+            </tr>
+        </tbody>
+    </table>
+    没有25 <br />
+    26-29 -综合案例-注册页面<br />
+
+    <h3>人生得意须尽欢</h3>
+    <form action="xxx.php" method="get">
+        <table width="500">
+            <tr>
+                <td>性别</td>
+                <td>
+                    <input id="nan" type="radio" name="xingbie" checked="checked" value="nan" /><label
+                        for="nan">男</label>
+                    <input id="nv" type="radio" name="xingbie" value="nv" /><label for="nv">女</label>
+                </td>
+            </tr>
+            <tr>
+
+                <td>生日</td>
+                <td>
+                    <!-- <input name="shengri" /> -->
+                    <select name="nian">
+                        <option>请选择年</option>
+                        <option>2000</option>
+                        <option>2001</option>
+                        <option>2002</option>
+                        <option>2003</option>
+                        <option>2004</option>
+                        <option>2005</option>
+                    </select>
+                    <select name="yue">
+                        <option>请选择月</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                    </select>
+                    <select name="ri">
+                        <option>请选择日</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>所在地区</td>
+                <td>
+                    <select name="dizhi">
+                        <option>beijing</option>
+                        <option value="shanghai">上海</option>
+                        <option selected="selected">南京</option>
+                        <option>苏州</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>婚姻状况</td>
+                <td>
+                    <input id="weihun" type="radio" name="hunyinzhuangkuang" checked="checked" value="weihun" /><label
+                        for="weihun">未婚</label>
+                    <input id="liyi" value="liyi" type="radio" name="hunyinzhuangkuang" /><label for="liyi">离异</label>
+                    <input id="sangou" value="sangou" type="radio" name="hunyinzhuangkuang" /><label
+                        for="sangou">丧偶</label>
+                </td>
+            </tr>
+            <tr>
+                <td>学历</td>
+                <td>
+                    <select name="xueli">
+                        <option>小学</option>
+                        <option>初中</option>
+                        <option selected="selected">高中</option>
+                        <option>大学</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>喜欢的类型</td>
+                <td>
+                    <input id="checkbox1" type="checkbox" name="leixing" value="kailiang" /><label
+                        for="checkbox1">开朗的</label>
+                    <input id="checkbox2" type="checkbox" name="leixing" value="piaoliang" /><label
+                        for="checkbox2">漂亮的</label>
+                    <input id="checkbox3" type="checkbox" name="leixing" value="qingkuai" /><label
+                        for="checkbox3">勤快的</label>
+                    <input id="checkbox4" type="checkbox" name="leixing" value="douxihuan" checked="checked" /><label
+                        for="checkbox4">都喜欢</label>
+                </td>
+            </tr>
+            <tr>
+                <td>自我介绍</td>
+                <td>
+                    <textarea name="jieshao"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input name="" type="submit" value="免费注册" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input name="tongyi" type="checkbox" checked /><label for="">我同意注册条款和符合会员加入标准</label></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><a href="http://www.baidu.com" target="_blank">我是会员,立即登录</a></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <h3>我承诺</h3>
+                    <ul>
+                        <li>年满18岁、单身</li>
+                        <li>抱着严肃的态度</li>
+                        <li>真诚寻找另一半</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    30 学会查阅文档<br />
+    http://www.w3school.com.cn<br />
+    MDN: https://developer.mozilla.org/zh-CN/<br />
+
+    31 <br />
+    32 <br />
+    33 <br />
+    34 <br />
+    35 <br />
+    36 <br />
+    37 <br />
+    38 <br />
+    39 <br />
+
+    40 <br />
+    41 <br />
+    42 <br />
+    43 <br />
+    44 <br />
+    45 <br />
+    46 <br />
+    47 <br />
+    48 <br />
+    49 <br />
+
+    0 <br />
+    1 <br />
+    2 <br />
+    3 <br />
+    4 <br />
+    5 <br />
+    6 <br />
+    7 <br />
+    8 <br />
+    9 <br />
+
+    11 <br />
+    12 <br />
+    13 <br />
+    14 <br />
+    15 <br />
+    16 <br />
+    17 <br />
+    18 <br />
+    19 <br />
+
+    20 <br />
+    21 <br />
+    22 <br />
+    23 <br />
+    24 <br />
+    25 <br />
+    26 <br />
+    27 <br />
+    28 <br />
+    29 <br />
+
+    30 <br />
+    31 <br />
+    32 <br />
+    33 <br />
+    34 <br />
+    35 <br />
+    36 <br />
+    37 <br />
+    38 <br />
+    39 <br />
+
+    40 <br />
+    41 <br />
+    42 <br />
+    43 <br />
+    44 <br />
+    45 <br />
+    46 <br />
+    47 <br />
+    48 <br />
+    49 <br />
+    <div>本地化的copilot登录验证码 <strong>8jNVZH</strong></div>
+
+
+</body>
+
+</html>

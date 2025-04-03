@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 第二天</title>
+    <style>
+        /* 选择器样式 */
+
+        span {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    01-CSS第二天导读<br />
+    02-emmet语法生成html标签<br />
+    1. Emmet 语法<br />
+    1.1 快速生成HTML结构语法<br />
+    1. 生成标签 直接输入标签名 按tab键即可 比如 div 然后tab 键，就可以生成 &lt;div&gt;&lt;/div&gt;<br />
+    2. 如果想要生成多个相同标签 加上 * 就可以了 比如 div*3 就可以快速生成3个div<br />
+    3. 如果有父子级关系的标签，可以用 &gt; 比如 ul &gt; li就可以了<br />
+    4. 如果有兄弟关系的标签，用 + 就可以了 比如 div+p<br />
+    5. 如果生成带有类名或者id名字的，直接写 .demo 或者 #two tab 键就可以了<br />
+    6. 如果生成的div类名是有序的，可以用自增符号 $<br />
+    7. 如果想要在生成的标签内部写内容可以用{}表示 <br />
+    03-emmet语法快速生成css样式<br />
+    04-vscode自动格式化代码<br />
+    vscode 中设置-> 用户 -> 文本编辑器 -> 格式化 -> 勾选 format on Save<br />
+    05-复合选择器简介<br />
+    什么是复合选择器<br />
+    在CSS中，可以根据选择器的类型把选择器分为基础选择器和复合选择器，复合选择器是建立在基础选择器之上，对基本选择器进行组合形成的。<br />
+    - 复合选择器可以更准确、更高效的选择目标元素（标签）<br />
+    - 复合选择器是由两个或多个基础选择器，通过不同的方式组合而成的<br />
+    - 常用的复合选择器包括：后代选择器、子选择器、并集选择器、伪类选择器等等<br />
+    06-后代选择器<strong style="color: red;">重要</strong><br />
+    后代选择器又称为包含选择器，可以选择父元素里面子元素。其写法就是把外层标签写在前面，内层标签写在后面，中间用空格分隔。当标签发生嵌套时，内层标签就成为外层标签的后代。<br />
+    语法：<br />
+    元素1 元素2 { 样式声明 }<br />
+    上述语法表示选择元素 1 里面的所有元素 2（后代元素）。<br />
+    例如：<br />
+    ul li { 样式声明 } /* 选择 ul 里面所有的 li 标签元素 */<br />
+    - 元素1 和 元素2 中间用<strong style="color: red;">空格隔开</strong><br />
+    - 元素1 是父级，元素2 是子级，最终选择的是元素2<br />
+    - 元素2 可以是儿子，也可以是孙子等，只要是元素1 的后代即可<br />
+    - 元素1 和 元素2 可以是任意基础选择器<br />
+    style 书写格式如下：<br />
+    <pre>
+        &lt;style&gt;
+            /* 我想要把ol里面的小li选出来改为pink */
+            ol li {
+                color: pink;
+            }
+        &lt;/style&gt;
+    </pre>
+    效果如下：<br />
+    <style>
+        ol li {
+            color: red;
+        }
+    </style>
+
+    <body>
+        <ol>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ol>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </body>
+    07-子元素选择器(<strong style="color: red;">重要</strong>)<br />
+    子元素选择器（子选择器）只能选择作为某元素的最近一级子元素。简单理解就是选<strong style="color: red;">亲儿子元素</strong>。<br />
+    语法：<br />
+    元素1 > 元素2 { 样式声明 }<br />
+    上述语法表示选择元素1里面的所有直接后代（子元素）元素2。<br />
+    例如：<br />
+    div > p { 样式声明 } /* 选择 div 里面所有最近一级 p 标签元素 */<br />
+    - 元素1 和 元素2 中间用大于号隔开<br />
+    - 元素1 是父级，元素2 是子级，最终选择的是元素2<br />
+    - 元素2 <strong style="color: red;">必须是亲儿子</strong>，其孙子、重孙之类都不归他管;你也可以叫他亲儿子选择器<br />
+    ```
+    <pre>
+        &lt;style&gt;
+            /* 我想要把ol里面的小li选出来改为pink */
+            ul > li {
+                color: yellow;
+            }
+        &lt;/style&gt;
+    </pre>
+    <style>
+        ul>li {
+            color: burlywood;
+        }
+    </style>
+    08-课堂练习<br />
+    09-并集选择器<strong style="color: red;">重要</strong><br />
+    并集选择器可以选择多组标签，同时为他们定义相同的样式。通常用于集体声明。<br />
+    并集选择器是各选择器通过英文逗号（,）连接而成，任何形式的选择器都可以作为并集选择器的一部分。<br />
+    语法：<br />
+    元素1,元素2 { 样式声明 }<br />
+    上述语法表示选择元素1和元素2。<br />
+    例如：<br />
+    ul, div { 样式声明 } /* 选择 ul 和 div标签元素 */<br />
+    元素1和元素2中间用逗号隔开<br />
+    逗号可以理解为和的意思<br />
+    并集选择器通常用于集体声明<br />
+    <pre>
+    &lt;style&gt;
+        /* 要求1：请把熊大和熊二改为粉色 */
+        div,
+        p {
+            color: pink;
+        } 
+    
+        /* 要求2：请把熊大和熊二改为粉色 还有 小猪一家改为粉色 */
+        div,
+        p,
+        .pig li {
+            color: pink;
+            }
+        &lt;/style&gt;
+    </pre>
+    <style>
+        /* 要求1：请把熊大和熊二改为红色 */
+        div,
+        p {
+            color: red;
+        }
+
+        /* 要求2：请把光头强改为粉色 还有 数字改为burlywood色 */
+        span,
+        .pig li {
+            color: burlywood;
+        }
+    </style>
+
+
+    <div>熊大</div>
+    <p>熊二</p>
+    <span>光头强</span>
+    <ul class="pig">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+
+    10-链接伪类选择器(上) <strong style="color: red;">重要 需要复看</strong><br />
+    1. a:link 把没有点击过的( 访问过的) 链接选出来<br />
+    2. a:visited 选择点击过的( 访问过的) 链接<br />
+    3. a:hover 选择鼠标经过的那个链接<br />
+    4. a:active 鼠标正在按下还没有弹起鼠标的那个链接<br />
+    <strong style="color: red;font-size: large;">一定要按照上面的顺序写，否则可能不生效</strong>
+    <pre>
+    &lt;style&gt;
+        /* 1. 未访问的链接 a:link  把没有点击过的( 访问过的) 链接选出来 */
+        a:link {
+            color: #333;
+            text-decoration: none;
+        }
+    
+        /*2. a:visited 选择点击过的( 访问过的) 链接 */
+        a:visited {
+            color: orange;
+        }
+        /* 3. a:hover 选择鼠标经过的那个链接 */
+        a:hover {
+        color: skyblue;
+        }
+        
+        /* 4. a:active 鼠标正在按下还没有弹起鼠标的那个链接 */
+        a:active {
+        color: green;
+        }
+    &lt;/style&gt;
+        </pre>
+    <style>
+        /* 1. 未访问的链接 a:link  把没有点击过的( 访问过的) 链接选出来 */
+        a:link {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /*2. a:visited 选择点击过的( 访问过的) 链接 */
+        a:visited {
+            color: orange;
+        }
+
+        /* 3. a:hover 选择鼠标经过的那个链接 */
+        a:hover {
+            color: skyblue;
+        }
+
+        /* 4. a:active 鼠标正在按下还没有弹起鼠标的那个链接 */
+        a:active {
+            color: green;
+        }
+    </style>
+    <a href="#">测试</a><br />
+
+    11-链接伪类选择器(下)<strong style="color: red;">重要 需要复看</strong><br />
+    12-focus伪类选择器<br />
+    <pre>
+        &lt;style&gt;
+            input:focus {
+                background-color:red;
+                color:blue
+            }
+        
+        &lt;/style&gt;
+    </pre>
+    <style>
+        input:focus {
+            background-color: red;
+            color: blue
+        }
+    </style>
+    <input type="text">
+    <input type="text">
+    <input type="text"><br />
+    13-复合选择器总结<br />
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>选择器</th>
+                <th>作用</th>
+                <th>特征</th>
+                <th>使用情况</th>
+                <th>隔开符号及用法</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong style="color: red;">后代选择器</strong></td>
+                <td>用来选择后代元素</td>
+                <td>可以是子孙后代</td>
+                <td>较多</td>
+                <td>符号是空格 .nav a</td>
+            </tr>
+            <tr>
+                <td>子代选择器</td>
+                <td>选择最近一级元素</td>
+                <td>只选亲儿子</td>
+                <td>较少</td>
+                <td>符号是大于 .nav&gt;p</td>
+            </tr>
+            <tr>
+                <td><strong style="color: red;">并集选择器</strong></td>
+                <td>选择相同样式的元素</td>
+                <td>集体声明</td>
+                <td>较多</td>
+                <td>符号是逗号 .nav.header</td>
+            </tr>
+            <tr>
+                <td><strong style="color: red;">链接伪类选择器</strong></td>
+                <td>选择不同状态的链接</td>
+                <td>跟链接相关</td>
+                <td>较多</td>
+                <td><strong style="color: red;">重点</strong>记住 a{} 和 a:hover 实际开发的写法</td>
+            </tr>
+            <tr>
+                <td>:focus 选择器</td>
+                <td>选择获得光标的表单</td>
+                <td>跟表单相关</td>
+                <td>较少</td>
+                <td>input:focus 记住这个写法</td>
+            </tr>
+        </tbody>
+    </table>
+    14-什么是元素显示模式<strong style="color: red;">重要 需要复看</strong><br />
+    15-块元素<strong style="color: red;">重要 需要复看</strong><br />
+    常见的块元素有&lt;h1&gt;～&lt;h6&gt;、&lt;p&gt;、&lt;div&gt;、&lt;ul&gt;、&lt;ol&gt;、&lt;li&gt;等，其中 &lt;div&gt;
+    标签是最典型的块元素。<br />
+    块级元素的特点：<br />
+    1. 比较霸道，自己独占一行。<br />
+    2. 高度，宽度、外边距以及内边距都可以控制。<br />
+    3. 宽度默认是容器（父级宽度）的100%。<br />
+    4. 是一个容器及盒子，里面可以放行内或者块级元素。<br />
+    <strong style="color: red;">注意</strong><br />
+    - 文字类的元素内不能使用块级元素<br />
+    - &lt;p&gt; 标签主要用于存放文字，因此 &lt;p&gt; 里面不能放块级元素，特别是不能放&lt;div&gt;<br />
+    - 同理，&lt;h1&gt;～&lt;h6&gt;等都是文字类块级标签，里面也不能放其他块级元素<br />
+    16-行内元素<strong style="color: red;">重要 需要复看</strong><br />
+    常见的行内元素有&lt;a&gt;、&lt;strong&gt;、&lt;b&gt;、&lt;em&gt;、&lt;i&gt;、&lt;del&gt;、&lt;s&gt;、&lt;u&gt;、&lt;ins&gt;等，其中<br />
+    &lt;span&gt;span&gt; 标签是最典型的行内元素。有的地方也将行内元素称为内联元素。<br />
+    行内元素的特点：<br />
+    1. 相邻行内元素在一行上，一行可以显示多个。<br />
+    2. 高、宽直接设置是无效的。<br />
+    3. 默认宽度就是它本身内容的宽度。<br />
+    4. 行内元素只能容纳文本或其他行内元素。<br />
+    <br />
+    <strong style="color: red;">注意</strong><br />
+    - 链接里面不能再放链接<br />
+    - 特殊情况链接 &lt;a&gt; 里面可以放块级元素，但是给 &lt;a&gt; 转换一下块级模式最安全<br />
+    17-行内块元素<strong style="color: red;">重要 需要复看</strong><br />
+    在行内元素中有几个特殊的标签 ——&lt;img /&gt;、&lt;input /&gt;、&lt;td&gt;，它们同时具有块元素和行内元素的特点。<br />
+    有些资料称它们为行内块元素。<br />
+    行内块元素的特点：<br />
+    1. 和相邻行内元素（行内块）在一行上，但是他们之间会有空白缝隙。一行可以显示多个（行内元素特点）。<br />
+    2. 默认宽度就是它本身内容的宽度（行内元素特点）。<br />
+    3. 高度，行高、外边距以及内边距都可以控制（块级元素特点）。<br />
+    18-元素显示模式总结<br />
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>元素模式</th>
+                <th>元素排列</th>
+                <th>设置样式</th>
+                <th>默认宽度</th>
+                <th>包含</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>块级元素</td>
+                <td>一行只能放一个块级元素</td>
+                <td>可以设置宽度高度</td>
+                <td>容器的100%</td>
+                <td>容器级可以包含任何标签</td>
+            </tr>
+            <tr>
+                <td>行内元素</td>
+                <td>一行可以放多个行内元素</td>
+                <td>不可以直接设置宽度和高度</td>
+                <td>它本身内容的宽度</td>
+                <td>纳文本或则其他行内元素</td>
+            </tr>
+            <tr>
+                <td>行内块元素</td>
+                <td>一行放多个行内块元素</td>
+                <td>可以设置宽度和高度</td>
+                <td>它本身内容的宽度</td>
+            </tr>
+        </tbody>
+    </table>
+    19-显示模式的转换<br />
+    特殊情况下，我们需要元素模式的转换，简单理解：一个模式的元素需要另一个模式的特性<br />
+    比如想要增加链接a的触发范围<br />
+    <strong style="color: red;">行内元素转换为块元素：display:block;</strong><br />
+    <strong style="color:burlywood;">块元素转为行内元素：display:inline;</strong><br />
+    行内元素转换为行内块元素：display：inline-block<br />
+    实例如下：
+    <pre>
+    &lt;style&gt;
+    .line_block {
+        width: 150px;
+        height: 50px;
+        background-color: pink;
+        /* 把行内元素 a 转换为 块级元素 */
+        display: block;
+    }
+    .block_line {
+    width: 150px;
+    height: 50px;
+    background-color: pink;
+    /* 把行内元素 a 转换为 块级元素 */
+    display: inline;
+    }
+    .line_block_line {
+    width: 150px;
+    height: 50px;
+    background-color: blanchedalmond;
+    /* 把块元素 div 转换为 行内元素 */
+    display: inline-block;
+    }
+    &lt;/style&gt;
+    </pre>
+    <style>
+        .line_block {
+            width: 150px;
+            height: 50px;
+            background-color: red;
+            /* 把行内元素 a 转换为 块级元素 */
+            display: block;
+        }
+
+        .block_line {
+            width: 150px;
+            height: 50px;
+            background-color: blanchedalmond;
+            /* 把块元素 div 转换为 行内元素 */
+            display: inline;
+        }
+
+        .line_block_line {
+            width: 150px;
+            height: 50px;
+            background-color: blanchedalmond;
+            /* 把块元素 div 转换为 行内元素 */
+            display: inline-block;
+        }
+    </style>
+    <a class="line_block">行内元素转为块元素</a>
+    <a class="line_block">行内元素转为块元素</a>
+    <div class="block_line">块元素转为行元素</div>
+    <div class="block_line">块元素转为行元素</div><br />
+    <span class="line_block_line">块元素转为行元素</span>
+    <span class="line_block_line">块元素转为行元素</span><br />
+    20- 一个小工具snippets的使用<br />
+    21-简洁版小米侧边栏案例<br />
+    <style>
+        .xiaomi>a {
+            width: 200px;
+            height: 50px;
+            line-height: 50px;
+            display: block;
+            background-color: #535758;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .xiaomi>a:visited {
+            background-color: bisque;
+        }
+
+        .xiaomi>a:hover {
+            background-color: aqua;
+        }
+    </style>
+    <div class="xiaomi">
+        <a href="#1">1</a>
+        <a href="#2">2</a>
+        <a href="#3">3</a>
+        <a href="#4">4</a>
+        <a href="#5">5</a>
+        <a href="#6">6</a>
+        <a href="#7">7</a>
+    </div>
+
+    <br />
+    22-单行文字垂直居中的原理<br />
+    文字的行高等于盒子的高度<br />
+    <strong>
+        height: xx px;<br />
+        line-height: xx px;<br />
+        上面的两个值设置相同则可以实现垂直居中<br />
+    </strong>
+    <h3 style="color: red;">背景相关的需要全部重新看</h3>
+    23-背景颜色<br />
+    <style>
+        .background_css {
+            background-image: url(background.png);
+            height: 100px;
+        }
+
+        .transparent-input {
+            display: block;
+            width: 150px;
+            height: 50px;
+            opacity: 0.5;
+            /* 设置透明度 */
+            border: 2px solid red;
+            /* 设置边框颜色为红色 */
+            background-color: transparent;
+            /* 背景透明 */
+        }
+    </style>
+    <div class="background_css">
+        <input style="display: block;" />
+        <input style="display: block;" />
+        <input style="display: block;" />
+        <input class="transparent" type="text" placeholder="Enter text here...">
+    </div>
+    24-背景图片<br />
+    25-背景平铺<br />
+    26-背景位置-方位名词<br />
+    27-背景位置案例一<br />
+    28-背景位置案例二-王者荣耀背景图片<br />
+    29-背景位置-精确单位<br />
+    30-背景位置-混合单位<br />
+    31-背景固定<br />
+    32-背景属性复合写法<br />
+    33-背景颜色半透明<br />
+    34-背景总结<br />
+    35-综合案例-五彩导航(上)<br />
+    <style>
+        .nav a {
+            display: inline-block;
+            background-color: bisque;
+            height: 60px;
+            width: 100px;
+            text-align: center;
+            line-height: 60px;
+            color: aliceblue;
+        }
+
+        .nav .bg1:hover {
+            background-color: blue;
+        }
+    </style>
+    <div class="nav">
+        <a href="#" class="bg1">导航条1</a>
+        <a href="#">导航条2</a>
+        <a href="#">导航条3</a>
+        <a href="#">导航条4</a>
+        <a href="#">导航条5</a>
+    </div>
+    36-综合案例-五彩导航(二)<br />
+    21 <br />
+    22 <br />
+    23 <br />
+    24 <br />
+    25 <br />
+    26 <br />
+    27 <br />
+    28 <br />
+    29 <br />
+
+    30 <br />
+    31 <br />
+    32 <br />
+    33 <br />
+    34 <br />
+    35 <br />
+    36 <br />
+    37 <br />
+    38 <br />
+    39 <br />
+
+    40 <br />
+    41 <br />
+    42 <br />
+    43 <br />
+    44 <br />
+    45 <br />
+    46 <br />
+    47 <br />
+    48 <br />
+    49 <br />
+
+</body>
+
+</html>

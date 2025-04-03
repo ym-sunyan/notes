@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 第二天 三大特性</title>
+</head>
+
+<body>
+    01-CSS三大特性之层叠性<br />
+    元素重复设置的情况下，执行离元素最近的样式<br />
+    02-CSS三大特性之继承性<br />
+    03-行高的继承<br />
+    04-CSS三大特性之优先级<br />
+    <table border="1" cellpadding="1" cellspacing="0">
+        <thead>
+            <tr>
+                <th>选择器</th>
+                <th>选择器权重</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>继承 或者 *</td>
+                <td>0,0,0,0</td>
+            </tr>
+            <tr>
+                <td>元素选择器</td>
+                <td>0,0,0,1</td>
+            </tr>
+            <tr>
+                <td>类选择器，伪类选择器</td>
+                <td>0,0,1,0</td>
+            </tr>
+            <tr>
+                <td>ID选择器</td>
+                <td>0,1,0,0</td>
+            </tr>
+            <tr>
+                <td>行内样式.style=""</td>
+                <td>1,0,0,0</td>
+            </tr>
+            <tr>
+                <td>!important 重要的</td>
+                <td>无穷大</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3 style="color: red;">注意：子元素继承父元素css的时候，css属性继承权重为0，也就是说只要子元素设置属性则立刻覆盖继承来的css属性。哪怕父元素中使用!important 也同样如此</h3>
+    05-优先级注意的问题<br />
+    06-权重的叠加 <strong style="color: red;">重点</strong><br />
+    复合选择器有权重叠加的问题
+    <pre>
+    &lt;style&gt;
+        /* 复合选择器会有权重叠加的问题 */
+        /* ul li 权重 0,0,0,0,1 + 0,0,0,0,1  = 0,0,0,2 */
+        ul li {
+            color: green;
+        }
+        /* li 的权重是 0,0,0,0,1 */
+        li {
+            color: red;
+        }
+    &lt;/style&gt;
+    </pre>
+    <style>
+        /* 复合选择器会有权重叠加的问题 */
+        /* ul li 权重 0,0,0,0,1 + 0,0,0,0,1  = 0,0,0,2 */
+        ul li {
+            color: green;
+        }
+
+        /* li 的权重是 0,0,0,0,1 */
+        li {
+            color: red;
+        }
+    </style>
+    <h4>因为权重叠加 所以 ul li的权重 > li 的单独权重,因此是green</h4>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    07-权重两个练习题<br />
+    <pre>
+    &lt;style&gt;
+        /* .nav li 权重是 11 */
+        .nav li {
+            color: red;
+        }
+        /* 需求把第一个小li 颜色改为 粉色加粗 ? */
+        /* 权重是 10 */
+        .pink {
+            color: pink;
+            font-weight: 700;
+        }
+    &lt;/style&gt;
+    </pre>
+    <style>
+        /* .nav li 权重是 11 */
+        .nav li {
+            color: red;
+        }
+
+        /* 需求把第一个小li 颜色改为 粉色加粗 ? */
+        /* 权重是 10 */
+        .pink {
+            color: pink;
+            font-weight: 700;
+        }
+    </style>
+    <ul class="nav">
+        <li class="pink">特别注意这里颜色。这里是red，而不是pink。因为class pink的权重 < class nav+ li 的权重</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+
+    08-盒子模型导读<br />
+    <h3>页面布局的学习三个核心，<span style="color: red;">盒子模型</span>，<span style="color: red;">浮动</span>，<span
+            style="color: red;">定位</span>。 学习好盒子模型能非常好的帮助布局</h3>
+    09-看网页布局本质<br />
+    网页布局过程：<br />
+    1. 先准备好相关的网页元素，网页元素基本都是盒子 Box。<br />
+    2. 利用 CSS 设置好盒子样式，然后摆放到相应位置。<br />
+    3. 往盒子里面装内容。<br />
+    <h4>网页布局的核心，利用css摆盒子</h4>
+    10-盒子模型组成部分<br />
+    所谓 盒子模型：就是把 HTML 页面中的布局元素看作是一个矩形的盒子，也就是一个盛装内容的容器。
+    CSS 盒子模型本质上是一个盒子，封装周围的 HTML 元素.
+    它包括：边框(border)、外边距(margin)、内边距(padding)、和实际内容(content)
+
+    <img src="css_第二天_三大属性/盒子的组成.png" alt="Smiley face">
+    11-盒子模型边框border<br />
+    border可以设置元素的边框。边框有三部分组成:边框宽度(粗细) 边框样式 边框颜色<br />
+
+    语法：<br />
+    border : border-width || border-style || border-color<br />
+    三个属性合并的简写如下：<br />
+    border: 1px, solid red; //没有顺序限制<br />
+    <table border="1" cellpadding="1" cellspacing="0">
+        <thead>
+            <tr>
+                <th>属性</th>
+                <th>作用</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>border-width</td>
+                <td>定义边框粗细，单位是px</td>
+            </tr>
+            <tr>
+                <td>-style</td>
+                <td>边框的样式</td>
+            </tr>
+            <tr>
+                <td>-color</td>
+                <td>边框颜色</td>
+            </tr>
+        </tbody>
+    </table>
+    <img src="css_第二天_三大属性/边框样式.png" alt="Smiley face">
+
+    12-边框的复合写法<br />
+    边框四边的单独设置<br />
+    上边框:border-top<br />
+    下边框:border-bottom<br />
+    左边框:border-left<br />
+    右边框:border-right<br />
+
+    13-表格细线边框<br />
+    <h4>以下表格仅仅为了测试表格边框，不要关注内容</h4>
+    <style>
+        .border_table {
+            width: 600px;
+            height: 300px;
+        }
+
+        .border_th th {
+            height: 50px;
+        }
+
+        .border_table,
+        .border_th th,
+        .border_th td {
+            border: 1px, solid, red;
+            /* 合并相邻的边框 */
+            border-collapse: collapse;
+            font-size: 18px;
+            text-align: center;
+
+        }
+    </style>
+    <table class="border_table" cellspacing="0">
+        <thead class="border_th">
+            <tr>
+                <th>选择器</th>
+                <th>选择器权重</th>
+                <th>选择器权重</th>
+            </tr>
+        </thead>
+        <tbody class="border_th">
+            <tr>
+                <td>继承 或者 *</td>
+                <td>0,0,0,0</td>
+                <td>0,0,0,0</td>
+            </tr>
+            <tr>
+                <td>元素选择器</td>
+                <td>0,0,0,1</td>
+                <td>0,0,0,1</td>
+            </tr>
+            <tr>
+                <td>类选择器，伪类选择器</td>
+                <td>0,0,1,0</td>
+                <td>0,0,1,0</td>
+            </tr>
+            <tr>
+                <td>ID选择器</td>
+                <td>0,1,0,0</td>
+                <td>0,1,0,0</td>
+            </tr>
+            <tr>
+                <td>行内样式.style=""</td>
+                <td>1,0,0,0</td>
+                <td>1,0,0,0</td>
+            </tr>
+            <tr>
+                <td>!important 重要的</td>
+                <td>无穷大</td>
+                <td>无穷大</td>
+            </tr>
+        </tbody>
+    </table>
+    14-边框会影响盒子实际大小<br />
+    盒子的大小=块元素的大小+边框的大小<br />
+    15-模型内边距padding<br />
+    <div style="height: 400px; width: 400px; background-color: antiquewhite; padding: 10px 5px 30px 20px;">
+        16-padding复合属性
+        17-padding会影响盒子实际大小
+        18-padding应用-新浪导航栏(上)
+        19-padding应用-新浪导航栏(下)
+        20-小米侧边栏修改
+    </div>
+    16-padding复合属性<br />
+    <pre>
+    | 值的个数                | 表达意思                                      |
+    |-------------------------|-----------------------------------------------|
+    | padding: 5px;           | 1个值，代表上下左右都有5像素内边距；            |
+    | padding: 5px 10px;      | 2个值，代表上下内边距是5像素 左右内边距是10像素；|
+    | padding: 5px 10px 20px; | 3个值，代表上内边距5像素 左右内边距10像素 下内边距20像素；|
+    | padding: 5px 10px 20px 30px; | 4个值，上是5像素 右10像素 下20像素 左是30像素 顺时针 |
+    </pre>
+    <table border="1" cellspading="1" cellspacing="0">
+        <tr>
+            <th>值的个数</th>
+            <th>表达意思</th>
+        </tr>
+        <tr>
+            <td>padding: 5px;</td>
+            <td>1个值，代表上下左右都有5像素内边距；</td>
+        </tr>
+        <tr>
+            <td>padding: 5px 10px;</td>
+            <td>2个值，代表上下内边距是5像素 左右内边距是10像素；</td>
+        </tr>
+        <tr>
+            <td>padding: 5px 10px 20px;</td>
+            <td>3个值，代表上内边距5像素 左右内边距10像素 下内边距20像素；</td>
+        </tr>
+        <tr>
+            <td>padding: 5px 10px 20px 30px;</td>
+            <td>4个值，上是5像素 右10像素 下20像素 左是30像素 顺时针</td>
+        </tr>
+    </table>
+    17-padding会影响盒子实际大小<br />
+    当我们给盒子指定 padding 值之后，发生了 2 件事情：<br />
+    1. 内容和边框有了距离，添加了内边距。<br />
+    2. padding 影响了盒子实际大小。<br />
+    也就是说，如果盒子已经有了宽度和高度，此时再指定内边框，会撑大盒子。<br />
+    解决方案：<br />
+    如果保证盒子跟效果图大小保持一致，则让 <strong>width/height 减去多出来的内边距大小</strong>即可。<br />
+    18-padding应用-新浪导航栏(上)<br />
+    19-padding应用-新浪导航栏(下)<br />
+    <style>
+        .xinlang_div_css {
+            border-top: 3px, solid, #ff8500;
+            border-bottom: 1px solid #edeef0;
+            height: 41px;
+            line-height: 41px;
+            background-color: #fcfcfc;
+        }
+
+        .xinlang_div_css a {
+            font-size: 20px;
+            height: 41px;
+            text-decoration: none;
+            color: #4c4c4c;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .xinlang_div_css a:hover {
+            background-color: #eee;
+            color: #ff8500;
+        }
+    </style>
+    <div class="xinlang_div_css">
+        <a href="#">设为首页</a>
+        <a href="#">新浪客户端</a>
+        <a href="#">微博</a>
+        <a href="#">关注我</a>
+
+    </div>
+    20-小米侧边栏修改<br />
+    21-padding不会撑开盒子的情况<br />
+    盒子不写宽度，设置padding的时候就不会撑开盒子<br />
+    22-盒子模型外边距margin<br />
+    <style>
+        .margin_div {
+            height: 200px;
+            width: 200px;
+            background-color: aliceblue;
+        }
+
+        .one {
+            margin-bottom: 10px;
+        }
+
+        .two {
+            margin-top: 20px;
+        }
+    </style>
+    <div class="margin_div one">1</div>
+    <div class="margin_div two">2</div>
+    23-外边距典型应用-块级盒子水平居中对齐<br />
+    外边距可以让块级盒子水平居中，但是必须满足两个条件：<br />
+    ① 盒子必须指定了宽度（width）。<br />
+    ② 盒子左右的外边距都设置为auto。<br />
+    <pre>.header{ width:960px; margin:0 auto; }</pre><br />
+    常见的写法，以下三种都可以：<br />
+    ● margin-left:auto; margin-right:auto;<br />
+    ● margin:auto;<br />
+    ● <strong style="color: red;">margin:0 auto;</strong> 推荐写法<br />
+    注意: 以上方法是让块元素水平居中。<span style="color: red;">行内元素或者行内块元素水平居中只需要其父元素添加text-align:center</span> 即可<br />
+    24-行内元素和行内块元素水平居中<br />
+    <span style="color: red;">行内元素或者行内块元素水平居中只需要其父元素添加text-align:center</span> 即可<br />
+    25-外边距合并-嵌套块元素塌陷<br />
+    使用 margin 定义块元素的垂直外边距时，可能会出现外边距的合并。<br />
+    2. 嵌套块元素垂直外边距的塌陷<br />
+    <div style="color: red;">对于两个嵌套关系（父子关系）的块元素，父元素有上外边距同时子元素也有上外边距，此时父元素会塌陷较大的外边距值</div>。
+    解决方案：<br />
+    ① 可以为父元素定义上边框。<br />
+    ② 可以为父元素定义上内边距。<br />
+    ③ 可以为父元素添加 overflow:hidden<span style="color: red;">推荐使用</span><br />
+    26-清除内外边距<br />
+    <pre>
+        清楚网页元素的内外边距，下面的代码也是我们在网页css化的第一行代码
+        * {
+        padding:0; /* 清除内边距 */
+        margin:0; /* 清除外边距 */
+        }
+    </pre>
+    网页元素很多都带有默认的内外边距，而且不同浏览器默认的也不一致。因此我们在布局前，首先要清除下网页元素的内外边距。<br />
+    注意：行内元素为了照顾兼容性，尽量只设置左右内外边距，不要设置上下内外边距。但是转换为块级和行内块元素就可以了<br />
+    28-ps的基本操作<br />
+    <div style="width: 500px;">
+        <img src="css_第二天_三大属性/ps 基本操作.png" />
+    </div>
+    29-综合案例-产品模块布局分析<br />
+    30-综合案例-box布局<br />
+    31-综合案例-图片和段落制作<br />
+    32-综合案例-评价和详情制作<br />
+    33-综合案例-竖线细节制作<br />
+    <pre>
+        css 设置
+        body {
+        background-color: #f5f5f5;
+        }
+        
+        * {
+        margin: 0;
+        padding: 0;
+        }
+        
+        .div_29_33 {
+        width: 298px;
+        height: 415px;
+        background-color: white;
+        /* 水平居中上课内边距100px */
+        margin: 100px auto;
+        
+        }
+        
+        .div_29_33 img {
+        /* 这样设置之后img的宽度就和父盒子一样宽 */
+        width: 100%;
+        }
+        
+        .review {
+        text-align: center;
+        height: 70px;
+        /* line-height: 70px; */
+        /* 因为没有设置width 所有设置padding的左右28px不会撑开盒子 */
+        padding: 0 28px;
+        /* 因为设置了height 所以不能设置padding-top 否则会撑开盒子 */
+        margin-top: 30px;
+        }
+        
+        .appraise {
+        font-size: 12px;
+        color: #b0b0b0;
+        margin-top: 20px;
+        padding: 0 28px;
+        }
+        
+        .info {
+        font-size: 14px;
+        margin-top: 15px;
+        padding: 0 28px;
+        
+        }
+        
+        .info h4 {
+            设置行内块
+        display: inline-block;
+        font-weight: 400;
+        }
+        
+        .info span {
+        color: #ff8500;
+        }
+        
+        .info em {
+            去除样式
+        font-style: normal;
+        color: #ebe4e0;
+        margin: 0 5px 0 5px;
+        }
+        
+
+        .info a {
+        color: #333;
+        去除下划线
+        text-decoration: none;
+        }
+    </pre>
+
+    <pre>
+    &lt;div class="div_29_33"&gt;
+        &lt;a href="#"&gt;&lt;img src="css_第二天_三大属性/png1.png" /&gt;&lt;/a&gt;
+        &lt;p class="review"&gt;这是一个一条测试数据，用来显示内容用，内容长度需要超过盒子已实现自动换行&lt;/p&gt;
+        &lt;div class="appraise"&gt;来自于 xxxxx 的评价&lt;/div&gt;
+        &lt;div class="info"&gt;
+            &lt;h4&gt;&lt;a href="#"&gt;Readmi AirDots 真无线蓝...&lt;/a&gt;&lt;/h4&gt;
+            &lt;em&gt;|&lt;/em&gt;
+            &lt;span&gt;&lt;a href="#"&gt;99.9元&lt;/a&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    </pre>
+
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .div_29_33 {
+            width: 298px;
+            height: 415px;
+            background-color: white;
+            /* 水平居中上课内边距100px */
+            margin: 100px auto;
+
+        }
+
+        .div_29_33 img {
+            /* 这样设置之后img的宽度就和父盒子一样宽 */
+            width: 100%;
+        }
+
+        .review {
+            text-align: center;
+            height: 70px;
+            /* line-height: 70px; */
+            /* 因为没有设置width 所有设置padding的左右28px不会撑开盒子 */
+            padding: 0 28px;
+            /* 因为设置了height 所以不能设置padding-top 否则会撑开盒子 */
+            margin-top: 30px;
+        }
+
+        .appraise {
+            font-size: 12px;
+            color: #b0b0b0;
+            margin-top: 20px;
+            padding: 0 28px;
+        }
+
+        .info {
+            font-size: 14px;
+            margin-top: 15px;
+            padding: 0 28px;
+
+        }
+
+        .info h4 {
+            display: inline-block;
+            font-weight: 400;
+        }
+
+        .info span {
+            color: #ff8500;
+        }
+
+        .info em {
+            font-style: normal;
+            color: #ebe4e0;
+            margin: 0 5px 0 5px;
+        }
+
+        .info a {
+            color: #333;
+            text-decoration: none;
+        }
+    </style>
+    <strong style="color: red;">实例效果如下:</strong>
+    <div class="div_29_33">
+        <a href="#"><img src="css_第二天_三大属性/png1.png" /></a>
+        <p class="review">这是一个一条测试数据，用来显示内容用，内容长度需要超过盒子已实现自动换行</p>
+        <div class="appraise">来自于 xxxxx 的评价</div>
+        <div class="info">
+            <h4><a href="#">Readmi AirDots 真无线蓝...</a></h4>
+            <em>|</em>
+            <span><a href="#">99.9元</a></span>
+        </div>
+    </div>
+    34-pink老师解惑<br />
+    <h3>01-综合案例-快报模块布局分析</h3>
+    <h3>02-综合案例-快报模块头部制作</h3>
+    <h3>03-综合案例-快报模块列表制作</h3>
+    <style>
+        .kuaibao_div {
+            height: 163px;
+            width: 248px;
+            /* background-color: white; */
+            border: 1px, solid, #ccc;
+            margin: 100px auto;
+
+        }
+
+        .kuaibao_div h4 {
+            height: 32px;
+            line-height: 32px;
+            font-size: 14px;
+            font-weight: 400;
+            background-color: #ebe4e0;
+            border-bottom: 1px, dotted, #ccc;
+            padding-left: 15px;
+        }
+
+        .kuaibao_div li {
+            list-style: none;
+            height: 23px;
+            line-height: 23px;
+            padding-left: 20px;
+        }
+
+        .kuaibao_div li a {
+            margin: 0 40px;
+            font-size: 12px;
+            text-decoration: none;
+            color: #666;
+        }
+
+        .kuaibao_div li a:hover {
+            background-color: blanchedalmond;
+        }
+
+        .kuaibao_div ul {
+            padding-top: 7px;
+        }
+    </style>
+    <div class="kuaibao_div">
+        <h4>一品优购快报</h4>
+        <ul>
+            <li><a href="#">1111111111111111</a></li>
+            <li><a href="#">222222222</a></li>
+            <li><a href="#">33333333333333333333</a></li>
+            <li><a href="#">44444444444</a></li>
+            <li><a href="#">5555</a></li>
+        </ul>
+    </div>
+    <h3>04-圆角边框原理</h3>
+    <pre>
+        .border_radius {
+        width: 100px;
+        height: 60px;
+        background-color: #666;
+        设置矩形的圆角
+        border-radius: 20px; 
+        }
+    </pre>
+    <style>
+        .border_radius {
+            width: 100px;
+            height: 60px;
+            background-color: #666;
+            border-radius: 20px;
+        }
+    </style>
+    <div class="border_radius">圆角矩形</div>
+    <div style="width: 600px;">
+        <img style="width: 100%;" src="css_第二天_三大属性/圆角矩形设置.png" alt="">
+    </div>
+    <h3>05-圆角边框的使用</h3>
+    <div style="width: 600px;">
+        <img style="width: 100%;" src="css_第二天_三大属性/圆角边框.png" alt="">
+    </div>
+    <h3>06-盒子阴影</h3>
+    <div style="width: 600px;">
+        <img style="width: 100%;" src="css_第二天_三大属性/盒子阴影.png" alt="">
+    </div>
+    <div style="width: 600px;">
+        <img style="width: 100%;" src="css_第二天_三大属性/盒子阴影代码.png" alt="">
+    </div>
+    <h3>07-文字阴影</h3>
+    <div style="width: 600px;">
+        <img style="width: 100%;" src="css_第二天_三大属性/文字阴影.png" alt="">
+    </div>
+    <div style="width: 600px;">
+        <img style="width: 100%;" src="css_第二天_三大属性/文字阴影代码.png" alt="">
+    </div>
+    <h3>08-浮动导读</h3>
+    <h3>09-传统网页布局三种方式</h3>
+    <div style="width: 400px;">
+        <img style="width: 100%;" src="css_第二天_三大属性/标准流布局.png" alt="">
+    </div>
+    <h3>10-为什么需要浮动 / 11-什么是浮动</h3>
+    <div style="width: 400px;">
+        <img style="width: 100%;" src="css_第二天_三大属性/浮动-3-4.png" alt="">
+    </div>
+    <style>
+        .left,
+        .right {
+            float: left;
+            width: 100px;
+            height: 50px;
+            background-color: #e9e0e0;
+        }
+
+        .rigth {
+            float: right;
+        }
+    </style>
+    <div class="left">1</div>
+    <div class="right">4</div>
+    <br />
+    <br />
+    <br />
+    <h3>12-浮动特性-脱标</h3>
+    <div style="width: 400px;">
+        <img style="width: 100%;" src="css_第二天_三大属性/浮动-脱标.png" alt="">
+    </div>
+    <h3>13-浮动特性-浮动元素一行显示</h3>
+    <h3>14-浮动特性-浮动元素具有行内块特性</h3>
+    <h3>15-浮动元素经常搭配标准流的父元素</h3>
+    <h3>16-浮动布局练习1</h3>
+    <h3>17-浮动布局练习2</h3>
+    <h3>18-浮动练习-手机模块(上)</h3>
+    <h3>19-浮动练习-手机模块(下)</h3>
+    <h3>20-常见的网页布局</h3>
+    <h3>21-浮动的两个注意点</h3>
+    <h3>22-为什么清除浮动</h3>
+    <h3>23-清除浮动本质以及额外标签法</h3>
+    <h3>24-清除浮动之父元素overflow</h3>
+    <h3>25-清除浮动之after伪元素</h3>
+    <h3>26-清除浮动之双伪元素</h3>
+    <h3>27-清除浮动总结</h3>
+
+</body>
+
+</html>

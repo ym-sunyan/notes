@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Button</title>
+    <style>
+        .toggle-container {
+            display: flex;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            width: 150px;
+        }
+
+        .toggle-button {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .active {
+            background-color: #f0f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="toggle-container">
+        <div class="toggle-button active" onclick="toggle('work')">工作</div>
+        <div class="toggle-button" onclick="toggle('web')">Web</div>
+    </div>
+
+    <script>
+        function toggle(selected) {
+            const buttons = document.querySelectorAll('.toggle-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            document.querySelector(`.toggle-button[onclick="toggle('${selected}')"]`).classList.add('active');
+        }
+    </script>
+
+</body>
+
+</html>
